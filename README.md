@@ -1,5 +1,4 @@
- <h1 class="display-3">Repository for the term project for CS319 Object Oriented Programming course.  
-Find reports and other kind of documentation attached to this repository in the doc folder.</h1> 
+ <h1 class="display-3">Repository for the term project for CS319 Object Oriented Programming course. </h1> 
 
 <div>
   <h1 class="display-3">
