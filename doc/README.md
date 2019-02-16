@@ -1,1 +1,1 @@
-This is the doc folder
+Find reports and other kind of documentation attached to folder.
