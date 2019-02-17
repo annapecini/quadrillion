@@ -29,6 +29,9 @@
           Highscore tables
         </li> 
         <li>
+          Achievements
+        </li>
+        <li>
           Ladder mode daily challenge: Start from easy puzzles and time constraints. The game gets progressively harder both in puzzle difficulty and stiffness of the time constraint as more puzzles are solved. This mode can only be attempted daily, and has a separate highscore table. Scores are a weighted sum of the number of puzzles solved; weights are determined via difficulty and progression.
         </li>
         <li>
