@@ -17,6 +17,9 @@
         <li>
             <a href="https://github.com/uensalo" title="uensalo">Unsal Ozturk</a>
         </li>
+        <li>
+            <a href="https://github.com/annapecini" title="annapecini">Ana Pecini</a>
+        </li>
     </ul>
   </p>
  </div>
