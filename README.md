@@ -7,7 +7,7 @@
   </p>
   
   <h1 class="display-3">
-    Our features 
+    New features 
   </h1>
   
   <p class="lead">
@@ -28,7 +28,7 @@
     </ul>
   </p>
  
-  <h2 class="display-5">Group 1.K ~ The Group</h2>
+  <h2 class="display-5">Group 1.K ~ 'The Group'</h2>
   <p>
     <ul>
         <li>
