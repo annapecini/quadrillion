@@ -1,5 +1,3 @@
- <h1 class="display-3">Repository for the term project for CS319 Object Oriented Programming course. </h1> 
-
 <div>
   <h1 class="display-3">
     Quadrillion
