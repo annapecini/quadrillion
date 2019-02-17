@@ -41,10 +41,10 @@
             <a href="https://github.com/annapecini" title="annapecini">Ana Pecini</a>
         </li>
         <li>
-            <a href="">Teymur Bakhishli</a>
+            <a href="https://github.com/teymurbakhishli" title= "teymurbakhishli">Teymur Bakhishli</a>
         </li>
         <li>
-            <a href="">Muhammad Hammad Malik</a>
+            <a href="https://github.com/mhammadmalik" title= "mhammadmalik">Muhammad Hammad Malik</a>
         </li>
     </ul>
   </p>
