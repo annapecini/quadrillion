@@ -11,7 +11,7 @@
   </h1>
   
   <p class="lead">
-      We aim to include certain features such as:
+      We aim to include new features such as:
    <ul>
         <li>
           Time constraints for different levels
