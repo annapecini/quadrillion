@@ -14,16 +14,16 @@
       We aim to include certain features such as:
    <ul>
         <li>
-          - Time constraints for different levels
+          Time constraints for different levels
         </li>
         <li>
-          - Multiple themes (background and colors to choose from)
+          Multiple themes (background and colors to choose from)
         </li>
         <li>
-          - Easy, medium and hard versions (based on different grid sizes and time constraints)
+          Easy, medium and hard versions (based on different grid sizes and time constraints)
         </li>
         <li>
-          - Hints (ex. ability to look at the solved board for 5 seconds, which can be enabled after a certain time has passed. A hint can be awarded after completing a fixed number of levels and hints can be collected)
+          Hints (ex. ability to look at the solved board for 5 seconds, which can be enabled after a certain time has passed. A hint can be awarded after completing a fixed number of levels and hints can be collected)
         </li> 
     </ul>
   </p>
