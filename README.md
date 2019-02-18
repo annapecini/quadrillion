@@ -3,7 +3,7 @@
     Quadrillion
   </h1>
   <p class="lead">
-      This application is desktop version of the 'Quadrillion' board game. It is an IQ puzzle game which consists of 4 grids which can be combined in multiple ways and 12 puzzle pieces. The aim of the game is to arrange the puzzle pieces in such a way that they fit perfectly in the grid without leaving any empty spaces. 
+This application is desktop version of the 'Quadrillion' board game. It is an IQ puzzle game which consists of 4 grids which can be combined in multiple ways and 12 puzzle pieces. The square grids have different random places where you can not put any puzzle pieces, white and black dots. The aim of the game is to arrange the puzzle pieces in such a way that they fit perfectly in the grid without leaving any empty spaces. Every configuration of the grids guarantees at leat one solution.
   </p>
   
    <h2 class="display-5">Group 1.K ~ 'The Group'</h2>
