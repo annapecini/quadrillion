@@ -6,6 +6,27 @@
       This application is desktop version of the 'Quadrillion' board game. It is an IQ puzzle game which consists of 4 grids which can be combined in multiple ways and 12 puzzle pieces. The aim of the game is to arrange the puzzle pieces in such a way that they fit perfectly in the grid without leaving any empty spaces. 
   </p>
   
+   <h2 class="display-5">Group 1.K ~ 'The Group'</h2>
+  <p>
+    <ul>
+        <li>
+            <a href="https://github.com/kriselaskenderi" title="kriselaskenderi">Krisela Skenderi</a>
+        </li>
+        <li>
+            <a href="https://github.com/uensalo" title="uensalo">Unsal Ozturk</a>
+        </li>
+        <li>
+            <a href="https://github.com/annapecini" title="annapecini">Ana Pecini</a>
+        </li>
+        <li>
+            <a href="https://github.com/teymurbakhishli" title= "teymurbakhishli">Teymur Bakhishli</a>
+        </li>
+        <li>
+            <a href="https://github.com/mhammadmalik" title= "mhammadmalik">Muhammad Hammad Malik</a>
+        </li>
+    </ul>
+  </p>
+  
   <h1 class="display-3">
     New features 
   </h1>
@@ -40,24 +61,24 @@
     </ul>
   </p>
  
-  <h2 class="display-5">Group 1.K ~ 'The Group'</h2>
-  <p>
-    <ul>
+ <h1 class="display-3">
+    What's different?
+  </h1>
+     <ul>
         <li>
-            <a href="https://github.com/kriselaskenderi" title="kriselaskenderi">Krisela Skenderi</a>
+          Players have a limited time to complete the puzzle.
         </li>
-        <li>
-            <a href="https://github.com/uensalo" title="uensalo">Unsal Ozturk</a>
+       <li>
+          Players are awarded with hints and they are ranked among each other.
         </li>
-        <li>
-            <a href="https://github.com/annapecini" title="annapecini">Ana Pecini</a>
+       <li>
+          Depending on the level, the board may consist of more than 4 grids.
         </li>
-        <li>
-            <a href="https://github.com/teymurbakhishli" title= "teymurbakhishli">Teymur Bakhishli</a>
-        </li>
-        <li>
-            <a href="https://github.com/mhammadmalik" title= "mhammadmalik">Muhammad Hammad Malik</a>
-        </li>
-    </ul>
-  </p>
- </div>
+  </ul>
+  
+  <h1 class="display-3">
+    References
+  </h1>
+  "QUADRILLION - keep on playing ... forever", Smartgamesandpuzzles.com, 2019. [Online]. Available: http://www.smartgamesandpuzzles.com/inventor/Quadrillion.html. [Accessed: 18- Feb- 2019].
+ 
+  </div>
