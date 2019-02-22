@@ -1,0 +1,33 @@
+20190222
+- New Ideas - 
+  - "Campaign mode": levels are scattered throughout treasure hunt map, in style of Candy Crush.
+    - Possible implementations:
+      - Treasure hidden somewhere in the map, completing levels provides cryptic hints.
+        - E.g. "The treasure is in the detail."
+      - Some levels have missing pieces to prevent the player from directly jumping into harder puzzles. The player must complete
+        certain levels to gather all the pieces for a "blocking puzzle" to progress through the game. In style of the game, Braid.
+      - A round of Quadrillion in the map interface: The player collects a piece upon completing some level. The point of the game 
+        is now to complete all the necessary levels to gather the pieces for the puzzle in the map. Upon finishing the final puzzle
+        in the map interface, the player receives some award. Note: the puzzle itself is a very difficult game of Quadrillion. In
+        style of the game, The Talos Principle.
+        - E.g. The player creceives a big "hurrah".
+- "User profiles": Each user has a profile, which contains the following:
+  - "Must have" features:
+    - Settings configuration for that particular user.
+    - User name.
+    - User progression (levels completed, perhaps even statistics like elapsed time etc.).
+    - List of collectibles (themes for grids, background music, etc.).
+  - "Maybe" features that depend upon the quality of the implementation:
+    - Password authentication, in the case that it is deemed necessary.
+    - Score keeping for a high score table, in the case that highscores are actually implemented.
+    - List of unlocked achievements, in the case that achievements are actually implemented.
+    - Multiplayer history, in the case that multiplayer mode is actually implemented.
+- Ongoing Issues & Possible Desiderata -
+  - Note: Most of these are actually solved, but it is better to clarify/finalize the decisions.
+  - Library for GUI/Graphics
+    - AWT vs. Swing vs. JavaFX vs. OpenGL vs. some other library?
+  - Database utilization
+    - Password authentication (store hashes!)
+    - Keep all time highscores vs. keep scores locally
+  - Work allocation: Who does what?
+  20190222
