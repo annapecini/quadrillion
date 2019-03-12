@@ -1,13 +1,9 @@
 <div>
   <h1 class="display-3">
-    Quadrillion
+    Gazillion
   </h1>
   <p class="lead">
-<<<<<<< HEAD
-This application is desktop version of the 'Quadrillion' board game. It is an IQ puzzle game which consists of 4 grids which can be combined in officially 11 ways, and 12 puzzle pieces. The square grids have different random places where you can not put any puzzle pieces, white and black dots. The aim of the game is to arrange the puzzle pieces in such a way that they fit perfectly in the grid without leaving any empty spaces. Every configuration of the grids guarantees at leat one solution.
-=======
-      This application is desktop version of the 'Quadrillion' board game. It is an IQ puzzle game which consists of 4 grids which can be combined in multiple ways and 12 puzzle pieces. The square grids have different random places where you can not put any puzzle pieces, white and black dots. The aim of the game is to arrange the puzzle pieces in such a way that they fit perfectly in the grid without leaving any empty spaces. Every configuration of the grids guarantees at leat one solution.
->>>>>>> ff39734d741ee36f58d3811eef609726cfc12606
+      This application is desktop version of the 'Quadrillion' board game. The original game is an IQ puzzle which consists of 4 4x4 grids which can be rotated, flipped and combined together in multiple ways, and 12 puzzle pieces of different sizes and shapes. Each square grid has fixed positions on top of which no puzzle piece can be placed. The aim of the game is to arrange the puzzle pieces in such a way that they fit perfectly on the grid without leaving any empty spaces. Each one of the 638 976 starting configurations of the grids guarantees at least one solution, but some arrangements can have as many as 100'000 possible placements.
   </p>
   
    <h2 class="display-5">Group 1.K ~ 'The Group'</h2>
@@ -36,53 +32,31 @@ This application is desktop version of the 'Quadrillion' board game. It is an IQ
   </h1>
   
   <p class="lead">
-      We aim to include new features such as:
+     <i>The Group’s</i> digitalized Quadrillion, called Gazillion, is a roguelike version that enhances the dynamics of the original game by adding new immersive features, while preserving the core mechanics of the board game. The features include:
+•	time constraints for different levels
+•	shop entity where different themes and power ups can be purchased, etc.
    <ul>
         <li>
-          Time constraints for different levels
+          multiple modes with different goals and interactive maps
         </li>
         <li>
-          Multiple themes (background and colors to choose from)
+          player inventory, health and budget 
         </li>
         <li>
-          Easy, medium and hard versions (based on different grid sizes and time constraints)
+          time constraints for different levels
         </li>
         <li>
-          Hints (ex. ability to look at the solved board for 5 seconds, which can be enabled after a certain time has passed. A hint can be awarded after completing a fixed number of levels and hints can be collected)
+          shop entity where different themes and power ups can be purchased, etc.
         </li>
-        <li>
-          Highscore tables
-        </li> 
-        <li>
-          Achievements
-        </li>
-        <li>
-          Ladder mode daily challenge: Start from easy puzzles and time constraints. The game gets progressively harder both in puzzle difficulty and stiffness of the time constraint as more puzzles are solved. This mode can only be attempted daily, and has a separate highscore table. Scores are a weighted sum of the number of puzzles solved; weights are determined via difficulty and progression.
-        </li>
-        <li>
-          1v1 Multiplayer: Two people, one puzzle. One who solves first, wins.
-        </li> 
-    </ul>
+   </ul>
   </p>
- 
- <h1 class="display-3">
-    What's different?
-  </h1>
-     <ul>
-        <li>
-          Players have a limited time to complete the puzzle.
-        </li>
-       <li>
-          Players are awarded with hints and they are ranked among each other.
-        </li>
-       <li>
-          Depending on the level, the board may consist of more than 4 grids.
-        </li>
-  </ul>
   
   <h1 class="display-3">
     References
   </h1>
-  "QUADRILLION - keep on playing ... forever", Smartgamesandpuzzles.com, 2019. [Online]. Available: http://www.smartgamesandpuzzles.com/inventor/Quadrillion.html. [Accessed: 18- Feb- 2019].
+“Discover Our SmartGames Collection.” IQ Puzzler Pro - SmartGames, https://www.smartgames.eu/uk/our-smart-story. [Accessed: Mar 10, 2019].
+“Quadrillion.” www.smartgames.eu/uk/one-player-games/quadrillion. [Accessed: Mar 05, 2019].
+“QUADRILLION - keep on playing forever”. www.smartgamesandpuzzles.com/inventor/Quadrillion.html. [Accessed: Mar 05, 2019].
+
  
   </div>
