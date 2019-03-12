@@ -33,8 +33,6 @@
   
   <p class="lead">
      <i>The Group’s</i> digitalized Quadrillion, called Gazillion, is a roguelike version that enhances the dynamics of the original game by adding new immersive features, while preserving the core mechanics of the board game. The features include:
-•	time constraints for different levels
-•	shop entity where different themes and power ups can be purchased, etc.
    <ul>
         <li>
           multiple modes with different goals and interactive maps
@@ -54,8 +52,8 @@
   <h1 class="display-3">
     References
   </h1>
-“Discover Our SmartGames Collection.” IQ Puzzler Pro - SmartGames, https://www.smartgames.eu/uk/our-smart-story. [Accessed: Mar 10, 2019].
-“Quadrillion.” www.smartgames.eu/uk/one-player-games/quadrillion. [Accessed: Mar 05, 2019].
+“Discover Our SmartGames Collection.” IQ Puzzler Pro - SmartGames, https://www.smartgames.eu/uk/our-smart-story. [Accessed: Mar 10, 2019].<br/>
+“Quadrillion.” www.smartgames.eu/uk/one-player-games/quadrillion. [Accessed: Mar 05, 2019]. <br/>
 “QUADRILLION - keep on playing forever”. www.smartgamesandpuzzles.com/inventor/Quadrillion.html. [Accessed: Mar 05, 2019].
 
  
