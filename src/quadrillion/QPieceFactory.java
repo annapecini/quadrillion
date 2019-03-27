@@ -135,9 +135,9 @@ public class QPieceFactory {
             case PIECE_TYPE_9: {
                 List<QCoordinate> piece = new ArrayList<>();
                 QCoordinate q1 = new QCoordinate(0, 0);
-                QCoordinate q2 = new QCoordinate(0, 0);
-                QCoordinate q3 = new QCoordinate(0, 1);
-                QCoordinate q4 = new QCoordinate(1, -1);
+                QCoordinate q2 = new QCoordinate(0, 1);
+                QCoordinate q3 = new QCoordinate(1, 1);
+                QCoordinate q4 = new QCoordinate(0, -1);
                 QCoordinate q5 = new QCoordinate(-1, -1);
                 piece.add(q1);
                 piece.add(q2);

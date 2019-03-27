@@ -20,7 +20,7 @@ public class QPiece {
      * @param type   The type of the piece as present in the original game, one among the 12 types.
      */
     QPiece(List<QCoordinate> coords, QPieceType type) {
-        this.pieceCoordinates = pieceCoordinates;
+        this.pieceCoordinates = coords;
         this.pieceType = type;
     }
 
@@ -74,5 +74,21 @@ public class QPiece {
      */
     public QPieceType getPieceType() {
         return pieceType;
+    }
+
+    public double getCenterOfMassX() {
+        double avgX = 0;
+        for(QCoordinate q: pieceCoordinates) {
+            avgX += q.x();
+        }
+        return avgX / pieceCoordinates.size();
+    }
+
+    public double getCenterOfMassY() {
+        double avgY = 0;
+        for(QCoordinate q: pieceCoordinates) {
+            avgY += q.y();
+        }
+        return avgY / pieceCoordinates.size();
     }
 }

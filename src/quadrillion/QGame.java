@@ -19,6 +19,7 @@ public class QGame {
     private Map<QPiece, List<QCoordinate>> pieceToCoordinateMap;
     private Map<QCoordinate, QPiece> coordinateToPieceMap;
     private List<QCoordinate> blockerCoordinates;
+    private boolean gameWon;
 
     /**
      * Constructor for the game object.
@@ -27,6 +28,8 @@ public class QGame {
      * @param timeRemaining Time before which the level must be completed.
      */
     public QGame(QBoard board, long timeRemaining) {
+        // game not won yet
+        gameWon = false;
         // init timer
         timer = new QTimer(timeRemaining);
         // set board object of game
@@ -69,8 +72,11 @@ public class QGame {
         }
         // check available positions
         for (QCoordinate q : pieceCoords) {
-            if (coordinateToPieceMap.get(q) != null || blockerCoordinates.contains(q)) {
-                // position occupied by a piece or is a blocker
+            if (!coordinateToPieceMap.containsKey(q)) {
+                // no such position
+                return false;
+            } else if(coordinateToPieceMap.get(q) != null || blockerCoordinates.contains(q)){
+                //position occupied by a piece or is a blocker
                 return false;
             }
         }
@@ -158,5 +164,29 @@ public class QGame {
      */
     public void incrementTimeRemaining(long increment) {
         timer.setTimeRemaining(timer.getTimeRemaining() + increment);
+    }
+
+    public QTimer getTimer() {
+        return timer;
+    }
+
+    public List<QPiece> getPieces() {
+        return pieces;
+    }
+
+    public Map<QPiece, List<QCoordinate>> getPieceToCoordinateMap() {
+        return pieceToCoordinateMap;
+    }
+
+    public Map<QCoordinate, QPiece> getCoordinateToPieceMap() {
+        return coordinateToPieceMap;
+    }
+
+    public List<QCoordinate> getBlockerCoordinates() {
+        return blockerCoordinates;
+    }
+
+    public QBoard getBoard() {
+        return board;
     }
 }
