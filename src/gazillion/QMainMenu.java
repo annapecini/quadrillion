@@ -16,11 +16,21 @@ import java.awt.event.ActionListener;
 public class QMainMenu extends QPanel {
     private JButton newGame;
     private JButton resumeGame;
+    private QImagePanel background;
     private QGazillionPanel gamePanel;
     public QMainMenu(QPanel parent, QFrame frame) {
         super(parent, frame);
         newGame = new JButton("New Game");
         resumeGame = new JButton("Resume Game");
+
+        background = new QImagePanel(parent, frame, "background.jpg");
+        @Override
+        protected void paintComponent(Graphics g) {
+
+            super.paintComponent(g);
+            g.drawImage(bgImage, 0, 0, null);
+        }
+
         ActionListener newGameListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
