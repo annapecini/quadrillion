@@ -27,6 +27,7 @@ public class QGrid {
         blockersFace1 = blockersFront;
         blockersFace2 = blockersBack;
         this.type = type;
+        activeFace = true;
     }
 
     /**

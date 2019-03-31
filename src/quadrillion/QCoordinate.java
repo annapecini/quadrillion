@@ -14,7 +14,7 @@ public class QCoordinate {
      * @param x x coordinate
      * @param y y coordinate
      */
-    QCoordinate(int x, int y) {
+    public QCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -76,5 +76,14 @@ public class QCoordinate {
     @Override
     public boolean equals(Object o) {
         return o instanceof QCoordinate && x == ((QCoordinate) o).x() && y == ((QCoordinate) o).y();
+    }
+
+    @Override
+    public int hashCode() {
+        // Jon Skeet hash hack
+        int hash = 17;
+        hash += 31 * hash + x;
+        hash += 31 * hash + y;
+        return hash;
     }
 }

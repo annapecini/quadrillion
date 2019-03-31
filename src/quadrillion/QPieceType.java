@@ -18,5 +18,5 @@ public enum QPieceType {
     PIECE_TYPE_9,
     PIECE_TYPE_A,
     PIECE_TYPE_B,
-    PIECE_TYPE_C
+    PIECE_TYPE_C,
 }
