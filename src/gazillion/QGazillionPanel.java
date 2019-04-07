@@ -3,17 +3,20 @@ package gazillion;
 import quadrillion.QCoordinate;
 import quadrillion.QGame;
 import quadrillion.QPiece;
+import utils.Message;
+import utils.Observer;
+import utils.QSoundLoader;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Map;
+
+import static utils.Message.*;
 
 /**
  * QGazillionPanel
@@ -22,7 +25,7 @@ import java.util.Map;
  * @author Unsal Ozturk
  * @version 20190328
  */
-public class QGazillionPanel extends QPanel {
+public class QGazillionPanel extends QPanel implements Observer {
     private QTheme theme;
     private QGame game;
     private QPlayer player;
@@ -31,6 +34,9 @@ public class QGazillionPanel extends QPanel {
     private QPiece selectedPiece;
     private QPlayerInfoPanel playerInfo;
     private QUtilityPanel util;
+    private JButton giveUp;
+    private boolean locked;
+    private int musicID;
 
     private int mouseX;
     private int mouseY;
@@ -41,6 +47,8 @@ public class QGazillionPanel extends QPanel {
 
     public QGazillionPanel(QPanel parent, QFrame frame, QPlayer player, QTheme theme, QGame game) {
         super(parent, frame);
+        musicID = -1;
+        this.locked = false;
         this.player = player;
         this.theme = theme;
         this.game = game;
@@ -48,22 +56,45 @@ public class QGazillionPanel extends QPanel {
         gamePanel = new QGamePanel(this, frame);
         gamePanel.setPreferredSize(new Dimension(600, 600));
         setLayout(new BorderLayout());
-        add(gamePanel, BorderLayout.CENTER);
         QGameListener gameListener = new QGameListener();
         gamePanel.addMouseListener(gameListener);
         gamePanel.addMouseWheelListener(gameListener);
+        add(gamePanel, BorderLayout.CENTER);
 
         piecePanel = new QPieceCollectionPanel(this,frame,game.getPieces(),theme);
         add(piecePanel, BorderLayout.EAST);
-        piecePanel.addMouseListener(new QPieceCollectionListener());
 
+        piecePanel.addMouseListener(new QPieceCollectionListener());
         gamePanel.addMouseMotionListener(new QGazillionMotionListener());
 
         playerInfo = new QPlayerInfoPanel(this, frame, player);
         add(playerInfo, BorderLayout.NORTH);
 
+        giveUp = new JButton("Give Up!");
+        giveUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                giveUp.setEnabled(false);
+                game.stopTimer();
+                locked = true;
+                QSoundLoader.getInstance().playClip("shot");
+                musicID = QSoundLoader.getInstance().playSound("air");
+                JOptionPane.showMessageDialog(frame, "It's okay to give up. We're cool. Not everybody can be a winner. Definitely not your fault.");
+            }
+        });
         util = new QUtilityPanel(this,frame,game);
+        JButton back = this.getBackButton();
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                QSoundLoader.getInstance().stopSound(musicID);
+            }
+        });
+        util.add(back);
+        util.add(this.giveUp);
+
         add(util, BorderLayout.SOUTH);
+        game.addObserver(this);
     }
 
     public class QGazillionMotionListener extends MouseMotionAdapter {
@@ -82,48 +113,52 @@ public class QGazillionPanel extends QPanel {
     public class QGameListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            if(e.getButton() == MouseEvent.BUTTON1) {
-                double nx = Math.floor((e.getX() - CORNER_OFFSET_X + theme.getSize() / 2.0) / (theme.getSize()));
-                double ny = -Math.floor((e.getY() - CORNER_OFFSET_Y + theme.getSize() / 2.0) / (theme.getSize()));
-                System.out.println("" + nx + ", " + ny);
-                if (selectedPiece != null) {
-                    if (game.placePieceAt(selectedPiece, new QCoordinate((int) nx, (int) ny))) {
-                        piecePanel.getDisplayOfHostedPiece(selectedPiece).setAvailable(false);
-                        selectedPiece = null;
-                    } else {
-                        if (!game.getCoordinateToPieceMap().containsKey(new QCoordinate((int) nx, (int) ny))) {
-                            Component c = piecePanel.getDisplayOfHostedPiece(selectedPiece);
-                            ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(true);
+            if(!locked) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    double nx = Math.floor((e.getX() - CORNER_OFFSET_X + theme.getSize() / 2.0) / (theme.getSize()));
+                    double ny = -Math.floor((e.getY() - CORNER_OFFSET_Y + theme.getSize() / 2.0) / (theme.getSize()));
+                    if (selectedPiece != null) {
+                        if (game.placePieceAt(selectedPiece, new QCoordinate((int) nx, (int) ny))) {
+                            QSoundLoader.getInstance().playClip("click");
+                            piecePanel.getDisplayOfHostedPiece(selectedPiece).setAvailable(false);
                             selectedPiece = null;
+                        } else {
+                            if (!game.getCoordinateToPieceMap().containsKey(new QCoordinate((int) nx, (int) ny))) {
+                                Component c = piecePanel.getDisplayOfHostedPiece(selectedPiece);
+                                ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(true);
+                                selectedPiece = null;
+                            }
+                        }
+                    } else {
+                        QCoordinate coord = new QCoordinate((int) nx, (int) ny);
+                        QPiece piece = game.getCoordinateToPieceMap().get(coord);
+                        if (piece != null) {
+                            game.removePieceAt(coord);
+                            selectedPiece = piece;
                         }
                     }
-                } else {
-                    QCoordinate coord = new QCoordinate((int) nx, (int) ny);
-                    QPiece piece = game.getCoordinateToPieceMap().get(coord);
-                    if (piece != null) {
-                        game.removePieceAt(coord);
-                        selectedPiece = piece;
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    if (selectedPiece != null) {
+                        selectedPiece.flip(true);
                     }
-                }
-            } else if(e.getButton() == MouseEvent.BUTTON3){
-                if(selectedPiece != null) {
-                    selectedPiece.flip(true);
                 }
             }
         }
 
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
-            if(selectedPiece != null) {
-                int notches = e.getWheelRotation();
-                System.out.println(notches);
-                boolean direction = true;
-                if (notches < 0) {
-                    notches = -notches;
-                    direction = false;
-                }
-                for (int i = 0; i < notches; i++) {
-                    selectedPiece.rotate90(direction);
+            if (!locked) {
+                if (selectedPiece != null) {
+                    int notches = e.getWheelRotation();
+                    System.out.println(notches);
+                    boolean direction = true;
+                    if (notches < 0) {
+                        notches = -notches;
+                        direction = false;
+                    }
+                    for (int i = 0; i < notches; i++) {
+                        selectedPiece.rotate90(direction);
+                    }
                 }
             }
         }
@@ -132,18 +167,48 @@ public class QGazillionPanel extends QPanel {
     public class QPieceCollectionListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            Component c = e.getComponent().getComponentAt(e.getX(), e.getY());
-            if(piecePanel.getAvailabilityOfDisplay(c)) {
-                if(selectedPiece == null) {
-                    selectedPiece = piecePanel.getHostedPiece(c);
-                    ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(false);
-                } else {
-                    piecePanel.getDisplayOfHostedPiece(selectedPiece).setAvailable(true);
-                    selectedPiece = piecePanel.getHostedPiece(c);
-                    ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(false);
+            if (true) {
+                Component c = e.getComponent().getComponentAt(e.getX(), e.getY());
+                if (piecePanel.getAvailabilityOfDisplay(c)) {
+                    if (selectedPiece == null) {
+                        selectedPiece = piecePanel.getHostedPiece(c);
+                        ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(false);
+                    } else {
+                        piecePanel.getDisplayOfHostedPiece(selectedPiece).setAvailable(true);
+                        selectedPiece = piecePanel.getHostedPiece(c);
+                        ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(false);
+                    }
                 }
             }
         }
+    }
+
+    public void update(Message msg) {
+        if(msg.isValid()) {
+            if (msg.getContents()[GAME_OVER]) {
+                QSoundLoader.getInstance().playClip("shot");
+                QSoundLoader.getInstance().playClip("die");
+                JOptionPane.showMessageDialog(frame, "You died.");
+                game.stopTimer();
+                locked = true;
+            } else if (msg.getContents()[PLAY_BEAT]) {
+                QSoundLoader.getInstance().playClip("beat");
+            } else if (msg.getContents()[GAME_WON]){
+                game.stopTimer();
+                QSoundLoader.getInstance().playClip("victory");
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JOptionPane.showMessageDialog(null, "You are a huge nerd!.");
+                    }
+                });
+                t.run();
+                revalidate();
+                repaint();
+                locked = true;
+            }
+        }
+        util.update(msg);
     }
 
     public class QGamePanel extends QPanel {

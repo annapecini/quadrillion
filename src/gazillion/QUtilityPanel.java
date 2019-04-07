@@ -1,6 +1,8 @@
 package gazillion;
 
 import quadrillion.QGame;
+import utils.Message;
+import utils.Observer;
 
 import javax.swing.*;
 
@@ -11,7 +13,7 @@ import javax.swing.*;
  * @author Unsal Ozturk
  * @version 20190328
  */
-public class QUtilityPanel extends QPanel{
+public class QUtilityPanel extends QPanel implements Observer {
     private JButton health;
     private JButton time;
     private JButton hint;
@@ -22,16 +24,18 @@ public class QUtilityPanel extends QPanel{
         health = new JButton("Health!");
         time = new JButton("Time!");
         hint = new JButton("Hint!");
-        timeLeft = new JLabel("Time Left: " + game.getTimer().getTimeRemaining() / 1000);
+        timeLeft = new JLabel("Time Left: " + game.getTimer().getTimeRemaining() / 1000.0);
         this.game = game;
 
         add(health);
         add(time);
         add(hint);
         add(timeLeft);
+
     }
 
-    public void update() {
-        timeLeft.setText("Time Left: " + game.getTimer().getTimeRemaining() / 1000);
+    @Override
+    public void update(Message msg) {
+        timeLeft.setText("Time Left: " + game.getTimer().getTimeRemaining() / 1000.0);
     }
 }

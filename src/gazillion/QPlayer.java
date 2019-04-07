@@ -14,11 +14,11 @@ public class QPlayer {
     private int noTimeUp;
 
     public QPlayer() {
-        noHints = 5;
-        noCoins = 5;
-        noHealth = 5;
+        noHints = 0;
+        noCoins = 221;
+        noHealth = 3;
         noTimeUp = 5;
-        name = "Game Sucks";
+        name = "John Doe";
 
     }
 
