@@ -1,7 +1,5 @@
 package utils;
 
-import sun.applet.Main;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -85,7 +83,7 @@ public class QSoundLoader {
         try {
             /* LOAD SOUNDS HERE */
             streams.put(clipName, AudioSystem.getAudioInputStream(
-                    Main.class.getResourceAsStream(files.get(clipName))));
+                    QSoundLoader.class.getResourceAsStream(files.get(clipName))));
         } catch(Exception e) {
             e.printStackTrace();
         }
