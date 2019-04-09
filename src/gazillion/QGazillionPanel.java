@@ -3,6 +3,7 @@ package gazillion;
 import quadrillion.QCoordinate;
 import quadrillion.QGame;
 import quadrillion.QPiece;
+import logic.*;
 import utils.Message;
 import utils.Observer;
 import utils.QSoundLoader;
@@ -44,9 +45,12 @@ public class QGazillionPanel extends QPanel implements Observer {
     private static final int CORNER_OFFSET_X = 100;
     private static final int CORNER_OFFSET_Y = 250;
 
+    private QModePanel parent;
 
-    public QGazillionPanel(QPanel parent, QFrame frame, QPlayer player, QTheme theme, QGame game) {
-        super(parent, frame);
+    public QGazillionPanel(QModePanel parent, QFrame frame, QPlayer player, QTheme theme, QGame game) {
+        super( parent, frame);
+        this.parent = parent;
+
         musicID = -1;
         this.locked = false;
         this.player = player;
@@ -79,6 +83,7 @@ public class QGazillionPanel extends QPanel implements Observer {
                 locked = true;
                 QSoundLoader.getInstance().playClip("shot");
                 musicID = QSoundLoader.getInstance().playSound("air");
+                game.notifyObservers( );
                 JOptionPane.showMessageDialog(frame, "It's okay to give up. We're cool. Not everybody can be a winner. Definitely not your fault.");
             }
         });
@@ -87,7 +92,9 @@ public class QGazillionPanel extends QPanel implements Observer {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 QSoundLoader.getInstance().stopSound(musicID);
+
             }
         });
         util.add(back);
@@ -95,6 +102,7 @@ public class QGazillionPanel extends QPanel implements Observer {
 
         add(util, BorderLayout.SOUTH);
         game.addObserver(this);
+        game.addObserver(this.parent);
     }
 
     public class QGazillionMotionListener extends MouseMotionAdapter {
@@ -188,9 +196,10 @@ public class QGazillionPanel extends QPanel implements Observer {
             if (msg.getContents()[GAME_OVER]) {
                 QSoundLoader.getInstance().playClip("shot");
                 QSoundLoader.getInstance().playClip("die");
-                JOptionPane.showMessageDialog(frame, "You died.");
+                //JOptionPane.showMessageDialog(frame, "You died.");
                 game.stopTimer();
                 locked = true;
+
             } else if (msg.getContents()[PLAY_BEAT]) {
                 QSoundLoader.getInstance().playClip("beat");
             } else if (msg.getContents()[GAME_WON]){
@@ -199,7 +208,7 @@ public class QGazillionPanel extends QPanel implements Observer {
                 Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        JOptionPane.showMessageDialog(null, "You are a huge nerd!.");
+                        //JOptionPane.showMessageDialog(null, "You are a huge nerd!.");
                     }
                 });
                 t.run();
@@ -285,7 +294,3 @@ public class QGazillionPanel extends QPanel implements Observer {
         }
     }
 }
-
-
-
-
