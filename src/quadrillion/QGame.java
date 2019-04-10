@@ -1,9 +1,15 @@
 package quadrillion;
 
+import utils.Message;
+import utils.Observable;
+import utils.Observer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static utils.Message.GAME_OVER;
 
 /**
  * Defines a game of Quadrillion in the style of Gazillion, using QPiece objects, a QBoard object, a QTimer object, and
@@ -12,7 +18,7 @@ import java.util.Map;
  * @author Unsal Ozturk
  * @version 20190316
  */
-public class QGame {
+public class QGame implements Observable, Observer {
     private QTimer timer;
     private QBoard board;
     private List<QPiece> pieces;
@@ -20,6 +26,7 @@ public class QGame {
     private Map<QCoordinate, QPiece> coordinateToPieceMap;
     private List<QCoordinate> blockerCoordinates;
     private boolean gameWon;
+    private List<Observer> observers;
 
     /**
      * Constructor for the game object.
@@ -53,6 +60,7 @@ public class QGame {
         }
         //
         blockerCoordinates = board.getWorldCoordinateOfBlockers();
+        observers = new ArrayList<>();
     }
 
     /**
@@ -87,6 +95,7 @@ public class QGame {
         }
         // do piece to coordinate mapping
         pieceToCoordinateMap.put(piece, pieceCoords);
+        notifyObservers();
         return true;
     }
 
@@ -188,5 +197,28 @@ public class QGame {
 
     public QBoard getBoard() {
         return board;
+    }
+
+    public void addObserver(Observer o) {
+        observers.add(o);
+        timer.addObserver(o);
+    }
+
+    public void notifyObservers() {
+        Message msg;
+        if(hasWon()) {
+            msg = new Message("1010");
+            for(Observer o: observers) {
+                o.update(msg);
+            }
+        }
+        timer.notifyObservers();
+    }
+
+    @Override
+    public void update(Message msg) {
+        if(msg.isValid() && msg.getContents()[GAME_OVER]) {
+            gameWon = false;
+        }
     }
 }

@@ -1,5 +1,12 @@
 package quadrillion;
 
+import utils.Message;
+import utils.Observable;
+import utils.Observer;
+import utils.QSoundLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,11 +17,12 @@ import java.util.TimerTask;
  * @author Unsal Ozturk
  * @version 20190316
  */
-public class QTimer {
+public class QTimer implements Observable {
     private Timer timer;
     private long timeRemaining;
     private long initialTime;
     private boolean running; // No other way to stop java timer thread
+    private List<Observer> observers;
 
     // TODO: Custom Timer type that is not based on java.util.Timer
     // Introduces a thread that runs in the background continuously
@@ -26,6 +34,7 @@ public class QTimer {
      * @param timeRemaining The time remaining until the timer ends.
      */
     public QTimer(long timeRemaining) {
+        observers = new ArrayList<>();
         running = false;
         this.timeRemaining = timeRemaining;
         this.initialTime = timeRemaining;
@@ -47,6 +56,7 @@ public class QTimer {
         if (timeRemaining <= 0) {
             terminate();
         }
+        notifyObservers();
     }
 
     /**
@@ -121,6 +131,25 @@ public class QTimer {
      */
     public boolean isOutOfTime() {
         return timeRemaining <= 0;
+    }
+
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    public void notifyObservers() {
+        System.out.println(timeRemaining);
+        for(Observer o: observers) {
+            Message msg;
+            if(timeRemaining <= 0) {
+                msg = new Message("1100");
+            } else if (timeRemaining == 100000 ){
+                msg = new Message("1001");
+            } else {
+                msg = new Message("0000");
+            }
+            o.update(msg);
+        }
     }
 
 }

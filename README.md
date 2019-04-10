@@ -19,7 +19,7 @@
             <a href="https://github.com/annapecini" title="annapecini">Ana Pecini</a>
         </li>
         <li>
-            <a href="https://github.com/teymurbakhishli" title= "teymurbakhishli">Teymur Bakhishli</a>
+            <a href="https://github.com/teymurbakhishli" title= "teymurbakhishli"><strike>Teymur Bakhishli</strike>&nbsp;RIP</a>
         </li>
         <li>
             <a href="https://github.com/mhammadmalik" title= "mhammadmalik">Muhammad Hammad Malik</a>
