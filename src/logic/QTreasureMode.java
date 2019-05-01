@@ -60,7 +60,7 @@ public class QTreasureMode extends QMode{
                 i--;
              else {
                 treasureGrid[rand / gridSize][rand % gridSize] = 1;
-                System.out.println("treasure: " + rand);
+                //System.out.println("treasure: " + rand);
             }
         }
         lastDisplayedHint = 0;
@@ -92,11 +92,12 @@ public class QTreasureMode extends QMode{
      * To get index of the button to highlight / change color ?????
      */
     public void getNextTreasurePosition(){
-
-        if( player.getNoHints() > 0) {
+        int nh = player.getNoHints();
+        if( nh > 0) {
 
             // decrease player hints
-            player.setNoHints(  player.getNoHints() - 1 );
+            player.setNoHints(  nh - 1 );
+            //player.notifyObservers();
 
             // find next hint to display
             int i;
@@ -223,8 +224,8 @@ public class QTreasureMode extends QMode{
         currentY = level % gridSize;
         currentX = level / gridSize;
 
-        System.out.println( " X: " + currentX);
-        System.out.println( " Y: " + currentY);
+        //System.out.println( " X: " + currentX);
+        //System.out.println( " Y: " + currentY);
     }
 
     /**

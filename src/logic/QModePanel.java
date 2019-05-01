@@ -34,7 +34,7 @@ public abstract class QModePanel extends QPanel implements Observer {
     public void updateTreasureColor( int buttonIndex){}
 
     public void updatePlayerInformation(){
-        playerInfo.update();
+        //playerInfo.update();
     }
 
     public boolean startQuadrillionGame( int i ){

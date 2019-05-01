@@ -33,6 +33,8 @@ public abstract class QMode {
 
     public QPlayer getPlayer(){ return player;}
 
+    public void setPlayer(QPlayer player) {this.player = player;}
+
     public abstract QGame playGame( int i);
 
 }

@@ -138,7 +138,7 @@ public class QTimer implements Observable {
     }
 
     public void notifyObservers() {
-        System.out.println(timeRemaining);
+        //System.out.println(timeRemaining);
         for(Observer o: observers) {
             Message msg;
             if(timeRemaining <= 0) {

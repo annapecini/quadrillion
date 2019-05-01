@@ -106,7 +106,7 @@ public class QSoundLoader {
                 clip = AudioSystem.getClip();
                 clip.open(stream);
                 clip.start();
-                while(!exited);
+                while(!exited || clip.isRunning());
                 clip.stop();
                 refresh(clipName);
             } catch(Exception e) {

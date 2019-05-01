@@ -158,7 +158,6 @@ public class QGazillionPanel extends QPanel implements Observer {
             if (!locked) {
                 if (selectedPiece != null) {
                     int notches = e.getWheelRotation();
-                    System.out.println(notches);
                     boolean direction = true;
                     if (notches < 0) {
                         notches = -notches;

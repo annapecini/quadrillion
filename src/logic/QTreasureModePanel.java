@@ -48,12 +48,15 @@ public class QTreasureModePanel extends QModePanel {
         hintButton = new JButton("Hint");
         topPanel.add(hintButton, BorderLayout.EAST);
 
+        // add a back button maybe?
+        topPanel.add(getBackButton(), BorderLayout.WEST);
+
         hintButton.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 treasureMode.getNextTreasurePosition();
-                updatePlayerInformation();
+                //updatePlayerInformation();
             }
         });
 
@@ -140,10 +143,12 @@ public class QTreasureModePanel extends QModePanel {
 
         super.paintComponent(g);
         try {
+            // NEVER USE ABSOLUTE PATHS...
             g.drawImage(ImageIO.read( new File("C:\\Users\\User\\IdeaProjects\\temp\\prova\\src\\logic\\image2.jpg")),
                                         0, 0,null);
         } catch (IOException exp) {
-            System.out.println( "Printim idiot");
+            //exp.printStackTrace();
+            //System.out.println( "Printim idiot");
         }
     }
 
@@ -176,7 +181,7 @@ public class QTreasureModePanel extends QModePanel {
     public void displayGameOver() {
         JOptionPane.showMessageDialog( frame, "YOU DIED");
         treasureMode = null;
-        frame.setActivePanel( new QMainMenu( null,frame));
+        frame.setActivePanel( parent);
     }
 
     @Override
