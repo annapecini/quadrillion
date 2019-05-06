@@ -28,7 +28,7 @@ public class QFrame extends JFrame {
 
     private void init() {
         setTitle("Gazillion");
-        setLocationRelativeTo(null);
+        //setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setSize(1280, 1024);
