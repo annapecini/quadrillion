@@ -1,5 +1,6 @@
 package logic;
 import gazillion.*;
+import quadrillion.QGame;
 import utils.Message;
 
 import javax.imageio.ImageIO;
@@ -132,6 +133,23 @@ public class QLevelModePanel extends QModePanel {
         }
 
         levelMode.saveMode();
+    }
+
+    @Override
+    public boolean startQuadrillionGame( int i ){
+
+        QGame game = mode.playGame( i);
+        if( game != null) {
+            QPlayer player = mode.getPlayer();
+            QThemeManager man = new QThemeManager();
+
+            gazillionPanel = new QGazillionPanel(this, frame, player, man.getTheme(player.getCurrentTheme()), game);
+            gazillionPanel.disableTimePowerup();
+            frame.setActivePanel( gazillionPanel);
+            return true;
+        }
+
+        return false;
     }
 }
 

@@ -5,6 +5,8 @@ import logic.QTreasureMode;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author Unsal Ozturk
@@ -16,11 +18,11 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
 
     private static final long serialVersionUID = 2124854180970585336L;
 
-    transient private static final int INITIAL_HEALTH = 5;
-    transient private static final int INITIAL_HINTS = 5;
-    transient private static final int INITIAL_COINS = 20;
-    transient private static final int INITIAL_TIME_UP = 5;
-    transient private static final int INITIAL_HEALTH_POWER_UP = 3;
+    transient public static final int INITIAL_HEALTH = 5;
+    transient public static final int INITIAL_HINTS = 5;
+    transient public static final int INITIAL_COINS = Integer.MAX_VALUE;
+    transient public static final int INITIAL_TIME_UP = 5;
+    transient public static final int INITIAL_HEALTH_POWER_UP = 3;
     transient private static final String FILE_DIRECTORY = "\\src\\files\\profiles\\";
     transient private static final String FILE_PATTERN = "profile";
     transient private static final String FILE_EXTENSION = ".gzp";
@@ -38,6 +40,8 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
     private int[][] treasureGrid;
     private int noPieces;
     private int latestLevel;
+    private List<String> ownedThemes;
+    private String currentTheme;
 
     // First time profile creation
     public QProfile(int ID, String name) {
@@ -48,7 +52,10 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
         noCoins = INITIAL_COINS;
         noTimeUp = INITIAL_TIME_UP;
         noHealthPowerUp = INITIAL_HEALTH_POWER_UP;
-        playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp);
+        ownedThemes = new ArrayList<>();
+        ownedThemes.add("Default");
+        currentTheme = "Default";
+        playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp, ownedThemes, currentTheme);
 
         treasureModeGrid = null;
         treasureGrid = null;
@@ -73,7 +80,9 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
             this.noCoins = read.noCoins;
             this.noTimeUp = read.noTimeUp;
             this.valid = true;
-            this.playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp);
+            this.ownedThemes = read.ownedThemes;
+            this.currentTheme = read.currentTheme;
+            this.playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp, ownedThemes, currentTheme);
             this.playerInstance.addObserver(this);
 
             treasureModeGrid = read.treasureModeGrid;
@@ -91,11 +100,12 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
             noTimeUp = playerInstance.getNoTimeUp();
             noHealthPowerUp = playerInstance.getNoHealthPowerUp();
             noTimeUp = playerInstance.getNoHealthPowerUp();
-
+            ownedThemes = playerInstance.getOwnedThemes();
             treasureModeGrid = playerInstance.getTreasureModeGrid();
             treasureGrid = playerInstance.getTreasureGrid();
             noPieces = playerInstance.getNoPieces();
             latestLevel = playerInstance.getLatestLevel();
+            currentTheme = playerInstance.getCurrentTheme();
         }
     }
 

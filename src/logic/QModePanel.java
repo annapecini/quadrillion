@@ -34,7 +34,7 @@ public abstract class QModePanel extends QPanel implements Observer {
             QPlayer player = mode.getPlayer();
             QThemeManager man = new QThemeManager();
 
-            gazillionPanel = new QGazillionPanel(this, frame, player, man.getThemes().get(0), game);
+            gazillionPanel = new QGazillionPanel(this, frame, player, man.getTheme(player.getCurrentTheme()), game);
             frame.setActivePanel( gazillionPanel);
             return true;
         }

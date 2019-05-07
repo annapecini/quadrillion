@@ -88,19 +88,23 @@ public class QGazillionPanel extends QPanel implements Observer {
                     locked = true;
                     QSoundLoader.getInstance().playClip("shot");
                     musicID = QSoundLoader.getInstance().playSound("air");
-                    game.notifyObservers();
-                    JOptionPane.showMessageDialog(frame, "It's okay to give up. We're cool. Not everybody can be a winner. Definitely not your fault.");
+                    game.lose();
+                    JOptionPane.showMessageDialog(frame, theme.getMessage()); //"It's okay to give up. We're cool. Not everybody can be a winner. Definitely not your fault."
                     frame.setActivePanel(parent);
                     QSoundLoader.getInstance().stopSound(musicID);
                 }
             }
         });
-        util = new QUtilityPanel(this,frame,game);
+        util = new QUtilityPanel(this,frame,game, player);
         util.add(this.giveUp);
 
         add( util, BorderLayout.SOUTH);
         game.addObserver(this);
         game.addObserver(this.parent);
+    }
+
+    public void disableTimePowerup() {
+        util.disableTimeButton();
     }
 
     public class QGazillionMotionListener extends MouseMotionAdapter {
@@ -190,27 +194,18 @@ public class QGazillionPanel extends QPanel implements Observer {
 
     public void update(Message msg) {
         if(msg.isValid()) {
-            if (msg.getContents()[GAME_OVER]) {
+            if (msg.getContents()[GAME_OVER] && !msg.getContents()[GAME_WON]) {
                 QSoundLoader.getInstance().playClip("shot");
                 QSoundLoader.getInstance().playClip("die");
                 game.stopTimer();
                 locked = true;
                 JOptionPane.showMessageDialog(frame, "You died.");
                 frame.setActivePanel( parent);
-
-
             } else if (msg.getContents()[PLAY_BEAT]) {
                 QSoundLoader.getInstance().playClip("beat");
             } else if (msg.getContents()[GAME_WON]){
                 game.stopTimer();
                 QSoundLoader.getInstance().playClip("victory");
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //JOptionPane.showMessageDialog(null, "You are a huge nerd!.");
-                    }
-                });
-                t.run();
                 revalidate();
                 repaint();
                 locked = true;

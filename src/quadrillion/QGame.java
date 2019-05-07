@@ -25,7 +25,7 @@ public class QGame implements Observable, Observer {
     private Map<QPiece, List<QCoordinate>> pieceToCoordinateMap;
     private Map<QCoordinate, QPiece> coordinateToPieceMap;
     private List<QCoordinate> blockerCoordinates;
-    private boolean gameWon;
+    private boolean gameLost;
     private List<Observer> observers;
 
     /**
@@ -36,7 +36,7 @@ public class QGame implements Observable, Observer {
      */
     public QGame(QBoard board, long timeRemaining) {
         // game not won yet
-        gameWon = false;
+        gameLost = false;
         // init timer
         timer = new QTimer(timeRemaining);
         // set board object of game
@@ -143,6 +143,11 @@ public class QGame implements Observable, Observer {
         return true;
     }
 
+    public void lose() {
+        gameLost = true;
+        notifyObservers();
+    }
+
     /**
      * Returns if the user has run out of time.
      *
@@ -211,6 +216,13 @@ public class QGame implements Observable, Observer {
             for(Observer o: observers) {
                 o.update(msg);
             }
+            timer.stop();
+        } else if (gameLost) {
+            msg = new Message("1110");
+            for(Observer o: observers) {
+                o.update(msg);
+            }
+            timer.stop();
         }
         timer.notifyObservers();
     }
@@ -218,7 +230,8 @@ public class QGame implements Observable, Observer {
     @Override
     public void update(Message msg) {
         if(msg.isValid() && msg.getContents()[GAME_OVER]) {
-            gameWon = false;
+            gameLost = true;
+            notifyObservers();
         }
     }
 }

@@ -16,6 +16,6 @@ public class LevelModeDefinitions {
                 .setGrid(QGridType.values()[(index + 2) % 4], 0)
                 .setGrid(QGridType.values()[(index + 3) % 4], 0)
                 .setBoard(QBoardType.values()[index % 11])
-                .build(-1);
+                .build(1);
     }
 }
