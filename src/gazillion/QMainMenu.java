@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author
@@ -32,12 +34,23 @@ public class QMainMenu extends QPanel {
             buttons[i] = new JButton( "" + (i+1));
             this.add( buttons[i]);
 
-            buttons[i].addActionListener( new ActionListener() {
+            buttons[i].addMouseListener(new MouseAdapter() {
 
                 @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    mode = new QTreasureMode( QMainMenu.this.player);
-                    QPanel modePanel= mode.createPanel( QMainMenu.this, frame);
+                public void mouseClicked(MouseEvent mouseEvent) {
+                    int i = Integer.parseInt(((JButton) mouseEvent.getSource()).getText());
+
+                    if( i == 1) {
+                        mode = new QTreasureMode(QMainMenu.this.player);
+                    }
+                    else if( i == 2){
+                        mode = new QLevelMode( QMainMenu.this.player);
+                    }
+                    else{
+                        mode = new QLadderMode( QMainMenu.this.player);
+                    }
+
+                    QPanel modePanel = mode.createPanel(QMainMenu.this, frame);
                     frame.setActivePanel(modePanel);
                 }
             });
@@ -54,7 +67,7 @@ public class QMainMenu extends QPanel {
 
     public void setPlayer(QPlayer player) {
         this.player = player;
-        if(mode!=null) {
+        if(mode!= null) {
             mode.setPlayer(player);
         }
     }

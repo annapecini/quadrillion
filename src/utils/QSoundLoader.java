@@ -12,7 +12,7 @@ public class QSoundLoader {
     private static Map<String, AudioInputStream> streams;
     private static QSoundLoader loader;
     private static Map<Integer, SoundDriver> soundsPlaying;
-    public static QSoundLoader getInstance() {
+    public synchronized static QSoundLoader getInstance() {
         if(loader == null) {
             loader = new QSoundLoader();
         }
@@ -106,7 +106,7 @@ public class QSoundLoader {
                 clip = AudioSystem.getClip();
                 clip.open(stream);
                 clip.start();
-                while(!exited || clip.isRunning());
+                while(!exited);
                 clip.stop();
                 refresh(clipName);
             } catch(Exception e) {

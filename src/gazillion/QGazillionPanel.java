@@ -78,29 +78,27 @@ public class QGazillionPanel extends QPanel implements Observer {
         giveUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                giveUp.setEnabled(false);
-                game.stopTimer();
-                locked = true;
-                QSoundLoader.getInstance().playClip("shot");
-                musicID = QSoundLoader.getInstance().playSound("air");
-                game.notifyObservers( );
-                JOptionPane.showMessageDialog(frame, "It's okay to give up. We're cool. Not everybody can be a winner. Definitely not your fault.");
+
+                int choice = JOptionPane.showConfirmDialog(frame,
+                        "Are you sure?", "Back Confirmation", JOptionPane.YES_NO_OPTION);
+
+                if (choice == 0) {
+                    giveUp.setEnabled(false);
+                    game.stopTimer();
+                    locked = true;
+                    QSoundLoader.getInstance().playClip("shot");
+                    musicID = QSoundLoader.getInstance().playSound("air");
+                    game.notifyObservers();
+                    JOptionPane.showMessageDialog(frame, "It's okay to give up. We're cool. Not everybody can be a winner. Definitely not your fault.");
+                    frame.setActivePanel(parent);
+                    QSoundLoader.getInstance().stopSound(musicID);
+                }
             }
         });
         util = new QUtilityPanel(this,frame,game);
-        JButton back = this.getBackButton();
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                QSoundLoader.getInstance().stopSound(musicID);
-
-            }
-        });
-        util.add(back);
         util.add(this.giveUp);
 
-        add(util, BorderLayout.SOUTH);
+        add( util, BorderLayout.SOUTH);
         game.addObserver(this);
         game.addObserver(this.parent);
     }
@@ -195,9 +193,11 @@ public class QGazillionPanel extends QPanel implements Observer {
             if (msg.getContents()[GAME_OVER]) {
                 QSoundLoader.getInstance().playClip("shot");
                 QSoundLoader.getInstance().playClip("die");
-                //JOptionPane.showMessageDialog(frame, "You died.");
                 game.stopTimer();
                 locked = true;
+                JOptionPane.showMessageDialog(frame, "You died.");
+                frame.setActivePanel( parent);
+
 
             } else if (msg.getContents()[PLAY_BEAT]) {
                 QSoundLoader.getInstance().playClip("beat");

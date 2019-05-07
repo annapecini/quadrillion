@@ -28,7 +28,6 @@ public class QFrame extends JFrame {
 
     private void init() {
         setTitle("Gazillion");
-        setLocationRelativeTo(null);
 
         setSize(1280, 1024);
         setVisible(true);

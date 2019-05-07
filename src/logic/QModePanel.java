@@ -27,16 +27,6 @@ public abstract class QModePanel extends QPanel implements Observer {
         gazillionPanel = null;
     }
 
-    public abstract void updateAdjacentColor( int buttonIndex);
-
-    public abstract void updatePlayedColor( int buttonIndex);
-
-    public void updateTreasureColor( int buttonIndex){}
-
-    public void updatePlayerInformation(){
-        //playerInfo.update();
-    }
-
     public boolean startQuadrillionGame( int i ){
 
         QGame game = mode.playGame( i);
@@ -45,7 +35,7 @@ public abstract class QModePanel extends QPanel implements Observer {
             QThemeManager man = new QThemeManager();
 
             gazillionPanel = new QGazillionPanel(this, frame, player, man.getThemes().get(0), game);
-            frame.setActivePanel(gazillionPanel);
+            frame.setActivePanel( gazillionPanel);
             return true;
         }
 
@@ -56,4 +46,5 @@ public abstract class QModePanel extends QPanel implements Observer {
 
     // To display messages related to award !!
     public abstract void update( Message msg);
+
 }
