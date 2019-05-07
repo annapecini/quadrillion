@@ -14,10 +14,7 @@ import java.util.List;
  */
 
 public class QPlayer implements Observable {
-
-
     private List<Observer> observers;
-
     private String name;
     private int noHints;
     private int noHealth;
@@ -25,12 +22,15 @@ public class QPlayer implements Observable {
     private int noCoins;
     private int noTimeUp;
     private int[][] treasureModeGrid;
+    private int[][] levelModeGrid;
     private int[][] treasureGrid;
     private int noPieces;
     private int highestLevel;
     private int lastDisplayedHint;
+    private List<String> ownedThemes;
+    private String currentTheme;
 
-    public QPlayer(String name, int noHints, int noHealth, int noHealthPowerUp, int noCoins, int noTimeUp) {
+    public QPlayer(String name, int noHints, int noHealth, int noHealthPowerUp, int noCoins, int noTimeUp, List<String> ownedThemes, String currentTheme) {
         observers = new ArrayList<>();
         this.name = name;
         this.noHints = noHints;
@@ -43,10 +43,13 @@ public class QPlayer implements Observable {
         this.noPieces = 0;
         this.highestLevel = 0;
         this.lastDisplayedHint = 0;
+        this.ownedThemes = ownedThemes;
+        this.currentTheme = currentTheme;
     }
 
     @Override
     public void addObserver(Observer o) {
+        if(!observers.contains(o))
         observers.add(o);
     }
 
@@ -58,6 +61,24 @@ public class QPlayer implements Observable {
     }
 
     ///////////////////////////////////////////// GETTERS //////////////////////////////////////////////////
+    public List<String> getOwnedThemes() {
+        return ownedThemes;
+    }
+
+    public void addTheme(String theme) {
+        ownedThemes.add(theme);
+        notifyObservers();
+    }
+
+    public String getCurrentTheme() {
+        return currentTheme;
+    }
+
+    public void setCurrentTheme(String theme) {
+        currentTheme = theme;
+        notifyObservers();
+    }
+
     public String getName() {
         return name;
     }

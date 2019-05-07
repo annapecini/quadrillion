@@ -39,6 +39,7 @@ public class QLadderModePanel extends QModePanel{
 
         this.add( label, BorderLayout.NORTH);
         this.add( panel, BorderLayout.CENTER);
+        this.add(getBackButton(),BorderLayout.SOUTH);
 
         frame.setActivePanel(this);
 

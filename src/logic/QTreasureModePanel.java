@@ -2,11 +2,13 @@ package logic;
 import gazillion.*;
 import quadrillion.*;
 import utils.Message;
+import utils.QProfile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,6 +27,7 @@ public class QTreasureModePanel extends QModePanel {
     private QTreasureMode treasureMode;
     private JPanel topPanel;
     private JButton hintButton;
+    private JButton resetButton;
 
     private static final int locked = 0;
     private static final int unlocked = 1;
@@ -61,7 +64,23 @@ public class QTreasureModePanel extends QModePanel {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 treasureMode.getNextTreasurePosition();
-                //updatePlayerInformation();
+            }
+        });
+
+        resetButton = new JButton("Reset");
+        topPanel.add(resetButton, BorderLayout.SOUTH);
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int choice = JOptionPane.showConfirmDialog(frame,
+                        "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
+                if(choice == 0) {
+                    mode.player.setTreasureGrid(null);
+                    mode.player.setNoPieces(0);
+                    mode.player.setLastDisplayedHint(-1);
+                    mode.player.setTreasureModeGrid(null);
+                    frame.setActivePanel(parent);
+                }
             }
         });
 
@@ -115,11 +134,15 @@ public class QTreasureModePanel extends QModePanel {
                 .build(600000);
 
 
-        treasurePanel = new QPieceCollectionPanel(this, frame, tempgame.getPieces(), man.getThemes().get(0));
+        treasurePanel = new QPieceCollectionPanel(this, frame, tempgame.getPieces(), man.getTheme(mode.player.getCurrentTheme()));
 
         for(int i = 0; i < 12; i++){
             Component c = treasurePanel.getDisplayOfHostedPiece( tempgame.getPieces().get(i));
             ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(false);
+        }
+        for (int i = 0; i < mode.player.getNoPieces(); i++) {
+            Component c = treasurePanel.getDisplayOfHostedPiece( tempgame.getPieces().get(i));
+            ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(true);
         }
 
         add(treasurePanel, BorderLayout.EAST);
@@ -131,9 +154,8 @@ public class QTreasureModePanel extends QModePanel {
 
         super.paintComponent(g);
         try {
-            // NEVER USE ABSOLUTE PATHS...
-            g.drawImage(ImageIO.read( new File("C:\\\\Users\\\\User\\\\IdeaProjects\\\\temp\\\\prova\\\\src\\\\logic\\\\image.jpg")),
-                                        0, 0,null);
+            BufferedImage img = ImageIO.read(getClass().getResource("image2.jpg"));
+            g.drawImage(img,0, 0,null);
         } catch (IOException exp) {
             //exp.printStackTrace();
             //System.out.println( "Printim idiot");
@@ -149,10 +171,6 @@ public class QTreasureModePanel extends QModePanel {
         buttons[buttonIndex].setEnabled( true);
     }
 
-    public void updatePlayedColor(int buttonIndex) {
-
-        //buttons[buttonIndex].setBackground(Color.CYAN);
-    }
 
     public void updateTreasureColor(int buttonIndex) {
 
@@ -242,7 +260,7 @@ public class QTreasureModePanel extends QModePanel {
         if( msg.getContents()[Message.VALID] && msg.getContents()[Message.GAME_WON]){
             QAward award = treasureMode.evaluateAwardForCurrentGame( true);
             treasureMode.updateStateOfMode( true);
-        } else if( msg.getContents()[Message.VALID] && msg.getContents()[Message.GAME_OVER]){           //////////////////// SHOULD BE CHANGED  ////////////////////
+        } else if( msg.getContents()[Message.VALID] && msg.getContents()[Message.GAME_OVER]) {
             QAward award = treasureMode.evaluateAwardForCurrentGame( false);
             treasureMode.updateStateOfMode( false);
         }

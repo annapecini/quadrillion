@@ -15,6 +15,7 @@ import java.util.*;
 public class QTreasureMode extends QMode{
 
     private int gridSize = 6;
+    private int lastPosition;
     private int lastDisplayedHint;
 
     private static final int locked = 0;
@@ -71,6 +72,7 @@ public class QTreasureMode extends QMode{
         }
 
         lastDisplayedHint = player.getLastDisplayedHint();
+        lastPosition = waffle();
         collectedPieces = player.getNoPieces();
         currentX = -1;
         currentY = -1;
@@ -102,12 +104,24 @@ public class QTreasureMode extends QMode{
         return treasureGrid;
     }
 
+    public int waffle() {
+
+        for (int i = gridSize - 1; i > -1; i--)
+            for (int j = gridSize - 1; j > -1; j--) {
+                if (treasureGrid[i][j] == 1) {
+                    return i * gridSize + j;
+                }
+            }
+
+        return -1;
+    }
+
     /**
      * To get index of the button to highlight / change color ?????
      */
     public void getNextTreasurePosition(){
         int nh = player.getNoHints();
-        if( nh > 0) {
+        if( nh > 0 && lastDisplayedHint < lastPosition) {
 
             // decrease player hints
             player.setNoHints(  nh - 1 );
@@ -137,8 +151,6 @@ public class QTreasureMode extends QMode{
             for( int j = 0; j < gridSize; j++) {
                 if( gameGrid[i][j] == unlocked){
                     modePanel.updateAdjacentColor( i * gridSize + j);
-                }else if( gameGrid[i][j] == played) {
-                    modePanel.updatePlayedColor( i * gridSize + j);
                 }
             }
     }

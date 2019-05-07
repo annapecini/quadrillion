@@ -32,12 +32,14 @@ public class QSoundLoader {
         files.put("beat","/sounds/heartbeat.wav");
         files.put("air", "/sounds/air.wav");
         files.put("victory", "/sounds/victory.wav");
+        files.put("chaching", "/sounds/chaching.wav");
         refresh("click");
         refresh("die");
         refresh("beat");
         refresh("shot");
         refresh("air");
         refresh("victory");
+        refresh("chaching");
     }
 
     public synchronized void playClip(String clipName) {

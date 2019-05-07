@@ -99,6 +99,7 @@ public class QTimer implements Observable {
      */
     public void setTimeRemaining(long timeRemaining) {
         this.timeRemaining = timeRemaining;
+        notifyObservers();
     }
 
     /**

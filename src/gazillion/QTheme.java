@@ -16,12 +16,14 @@ public class QTheme {
     private boolean isUnlocked;
     private int cost;
     private String name;
+    private String message;
 
     public QTheme(String name, List<BufferedImage> tileSet, boolean isUnlocked, int cost) {
         this.name = name;
         this.tileSet = tileSet;
         this.isUnlocked = isUnlocked;
         this.cost = cost;
+        this.message = "You gave up.";
     }
 
     public List<BufferedImage> getAssets() {
@@ -53,5 +55,19 @@ public class QTheme {
 
     public int getSize() {
         return tileSet.get(0).getHeight();
+    }
+
+    public String getMessage() {return message;}
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof QTheme)) {
+            return false;
+        }
+        return name.equals(((QTheme)o).getName());
     }
 }
