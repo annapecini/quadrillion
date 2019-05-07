@@ -1,6 +1,7 @@
 package utils;
 
 import gazillion.QPlayer;
+import logic.QTreasureMode;
 
 import java.io.File;
 import java.io.Serializable;
@@ -33,6 +34,10 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
     private int noHealthPowerUp;
     private int noCoins;
     private int noTimeUp;
+    private int[][] treasureModeGrid;
+    private int[][] treasureGrid;
+    private int noPieces;
+    private int latestLevel;
 
     // First time profile creation
     public QProfile(int ID, String name) {
@@ -44,6 +49,12 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
         noTimeUp = INITIAL_TIME_UP;
         noHealthPowerUp = INITIAL_HEALTH_POWER_UP;
         playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp);
+
+        treasureModeGrid = null;
+        treasureGrid = null;
+        noPieces = 0;
+        latestLevel = -1;
+
         playerInstance.addObserver(this);
         valid = true;
         encode();
@@ -64,6 +75,11 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
             this.valid = true;
             this.playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp);
             this.playerInstance.addObserver(this);
+
+            treasureModeGrid = read.treasureModeGrid;
+            treasureGrid = read.treasureGrid;
+            noPieces = read.noPieces;
+            latestLevel = read.latestLevel;
         }
     }
 
@@ -75,6 +91,11 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
             noTimeUp = playerInstance.getNoTimeUp();
             noHealthPowerUp = playerInstance.getNoHealthPowerUp();
             noTimeUp = playerInstance.getNoHealthPowerUp();
+
+            treasureModeGrid = playerInstance.getTreasureModeGrid();
+            treasureGrid = playerInstance.getTreasureGrid();
+            noPieces = playerInstance.getNoPieces();
+            latestLevel = playerInstance.getLatestLevel();
         }
     }
 
@@ -101,6 +122,5 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
     public boolean isValid() {
         return valid;
     }
-
 
 }

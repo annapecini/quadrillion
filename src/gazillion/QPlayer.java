@@ -24,7 +24,11 @@ public class QPlayer implements Observable {
     private int noHealthPowerUp;
     private int noCoins;
     private int noTimeUp;
-
+    private int[][] treasureModeGrid;
+    private int[][] treasureGrid;
+    private int noPieces;
+    private int highestLevel;
+    private int lastDisplayedHint;
 
     public QPlayer(String name, int noHints, int noHealth, int noHealthPowerUp, int noCoins, int noTimeUp) {
         observers = new ArrayList<>();
@@ -34,6 +38,11 @@ public class QPlayer implements Observable {
         this.noHealth = noHealth;
         this.noTimeUp = noTimeUp;
         this.noHealthPowerUp = noHealthPowerUp;
+        this.treasureModeGrid = null;
+        this.treasureGrid = null;
+        this.noPieces = 0;
+        this.highestLevel = 0;
+        this.lastDisplayedHint = 0;
     }
 
     @Override
@@ -69,10 +78,17 @@ public class QPlayer implements Observable {
         return noHealthPowerUp;
     }
 
-    public int getNoTimeUp() {
-        return noTimeUp;
-    }
+    public int getNoTimeUp() { return noTimeUp; }
 
+    public int getLatestLevel() { return highestLevel; }
+
+    public int[][] getTreasureModeGrid() { return treasureModeGrid; }
+
+    public int getNoPieces() { return noPieces; }
+
+    public int[][] getTreasureGrid() { return treasureGrid; }
+
+    public int getLastDisplayedHint() { return lastDisplayedHint; }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -98,6 +114,31 @@ public class QPlayer implements Observable {
 
     public void setNoTimeUp(int noTimeUp) {
         this.noTimeUp = noTimeUp;
+        notifyObservers();
+    }
+
+    public void setNoPieces(int nr) {
+        this.noPieces = nr;
+        notifyObservers();
+    }
+
+    public void setLatestLevel(int no) {
+        this.highestLevel = no;
+        notifyObservers();
+    }
+
+    public void setLastDisplayedHint(int no) {
+        this.lastDisplayedHint = no;
+        notifyObservers();
+    }
+
+    public void setTreasureModeGrid(int[][] gameGrid) {
+        this.treasureModeGrid = gameGrid;
+        notifyObservers();
+    }
+
+    public void setTreasureGrid(int[][]treasureGrid) {
+        this.treasureGrid = treasureGrid;
         notifyObservers();
     }
 

@@ -26,6 +26,11 @@ public class QTreasureModePanel extends QModePanel {
     private JPanel topPanel;
     private JButton hintButton;
 
+    private static final int locked = 0;
+    private static final int unlocked = 1;
+    private static final int played = 2;
+    private static final int revealed = 3;
+
     public QTreasureModePanel(QMode currMode, QPanel parent, QFrame frame) {
 
         super(currMode, parent, frame);
@@ -33,7 +38,7 @@ public class QTreasureModePanel extends QModePanel {
 
         this.setLayout(new BorderLayout());
 
-        ////////////////////////// PLAYER INFO AT THE TOP /////////////////////////////////////////////////////////////
+        ////////////////////////// PLAYER INFO AT THE TOP ///////////////////////////
         topPanel = new JPanel();
 
         // top panel has border layout
@@ -62,36 +67,16 @@ public class QTreasureModePanel extends QModePanel {
 
         add(topPanel, BorderLayout.NORTH);
 
-        //////////////////////// THE BUTTONS / LEVELS ///////////////////////////////////////////////////////////////
-        buttonPanel = new JPanel(){
+        //////////////////////// THE BUTTONS / LEVELS ///////////////////////////////
+        buttonPanel = new JPanel();
 
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//
-//                super.paintComponent(g);
-//                try {
-//                    g.drawImage(ImageIO.read( new File("C:\\Users\\User\\IdeaProjects\\temp\\prova\\src\\logic\\image.jpg")),
-//                                                0, 0, buttonPanel.getWidth(), buttonPanel.getHeight(), null);
-//                } catch (IOException exp) {
-//                    System.out.println( "Printim idiot");
-//                }
-//            }
+        int gridSize = treasureMode.getGridSize();
+        buttons = new JButton[gridSize*gridSize];
+        buttonPanel.setLayout(new GridLayout(6, 6, 0, 0));
 
-
-        };
-        buttons = new JButton[36];
-        buttonPanel.setLayout(new GridLayout(6, 6));
-
-        for (int i = 0; i < 36; i++) {
-            buttons[i] = new JButton("" + (i + 1));
-
-            ///// To put an icon to buttons //////////
-//            try {
-//                Image img = ImageIO.read(new File("C:\\Users\\User\\IdeaProjects\\temp\\prova\\src\\logic\\button.jpg"));
-//                buttons[i].setIcon(new ImageIcon(img));
-//            } catch (Exception ex) {
-//                System.out.println(ex);
-//            }
+        for (int i = 0; i < gridSize * gridSize; i++) {
+            buttons[i] = new JButton();
+            buttons[i].setActionCommand("" + i);
 
             JPanel temp = new JPanel();
             temp.setLayout(new FlowLayout());
@@ -101,19 +86,23 @@ public class QTreasureModePanel extends QModePanel {
             buttonPanel.add(temp);
 
             buttons[i].addMouseListener(new MouseAdapter() {
-
                 @Override
                 public void mouseClicked(MouseEvent mouseEvent) {
-                    int i = Integer.parseInt(((JButton) mouseEvent.getSource()).getText());
-                    startQuadrillionGame(i - 1);
+                    if( ((JButton)mouseEvent.getSource()).isEnabled()) {
+                        int i = Integer.parseInt(((JButton) mouseEvent.getSource()).getActionCommand());
+                        startQuadrillionGame(i);
+                    }
                 }
             });
         }
 
+        // set button attributes, loaded from Treasure Mode when saved
+        initiateButtons();
+
         buttonPanel.setOpaque(false);
         add(buttonPanel, BorderLayout.CENTER);
 
-        /////////////////////////// TREASURE PANEL ///////////////////////////////////////////////////////////////S
+        /////////////////////////// TREASURE PANEL //////////////////////////////////////
 
         QThemeManager man = new QThemeManager();
 
@@ -134,7 +123,6 @@ public class QTreasureModePanel extends QModePanel {
         }
 
         add(treasurePanel, BorderLayout.EAST);
-
         frame.setActivePanel(this);
     }
 
@@ -144,7 +132,7 @@ public class QTreasureModePanel extends QModePanel {
         super.paintComponent(g);
         try {
             // NEVER USE ABSOLUTE PATHS...
-            g.drawImage(ImageIO.read( new File("C:\\Users\\User\\IdeaProjects\\temp\\prova\\src\\logic\\image2.jpg")),
+            g.drawImage(ImageIO.read( new File("C:\\\\Users\\\\User\\\\IdeaProjects\\\\temp\\\\prova\\\\src\\\\logic\\\\image.jpg")),
                                         0, 0,null);
         } catch (IOException exp) {
             //exp.printStackTrace();
@@ -152,27 +140,91 @@ public class QTreasureModePanel extends QModePanel {
         }
     }
 
-    ///////////////////// UPDATE BUTTON COLORS ///////////////////////////////////////////////////////
+    ///////////////////// UPDATE BUTTON COLORS //////////////////////////
 
     public void updateAdjacentColor(int buttonIndex) {
 
-        buttons[buttonIndex].setBackground(Color.GREEN);
+        //buttons[buttonIndex].setBackground(Color.GREEN);
+        buttons[buttonIndex].setVisible( true);
+        buttons[buttonIndex].setEnabled( true);
     }
 
     public void updatePlayedColor(int buttonIndex) {
 
-        buttons[buttonIndex].setBackground(Color.CYAN);
+        //buttons[buttonIndex].setBackground(Color.CYAN);
     }
 
     public void updateTreasureColor(int buttonIndex) {
 
-        buttons[buttonIndex].setBackground(Color.RED);
+        //buttons[buttonIndex].setBackground(Color.RED);
+        buttons[buttonIndex].setVisible( true);
     }
 
     public void updateTreasurePanel( QPiece newPiece) {
 
         Component c = treasurePanel.getDisplayOfHostedPiece( newPiece);
         ((QPieceCollectionPanel.QPieceDisplay) c).setAvailable(true);
+    }
+
+    public void initiateButtons(){
+        int[][] gameGrid = treasureMode.getGameGrid();
+        int gridSize = treasureMode.getGridSize();
+        int[][] treasureGrid = treasureMode.getTreasureGrid();
+
+        // load icons to the buttons according to treasure/ not treasure
+        for( int i = 0; i < gridSize; i++){
+            for( int j = 0; j < gridSize; j++){
+
+                buttons[i * gridSize + j].setContentAreaFilled(false);
+                if( treasureGrid[i][j] == 1){
+                    try{
+                        buttons[i * gridSize + j].setIcon( new ImageIcon( ImageIO.read(getClass().getResource(  "treasure.PNG"))));
+                    }
+                    catch( Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    try{
+                        buttons[i * gridSize + j].setIcon( new ImageIcon( ImageIO.read(getClass().getResource(  "nottreasure.PNG"))));
+                    }
+                    catch( Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        // adjust buttons visibility and enable/disable
+        for( int i = 0; i < gridSize; i++){
+            for( int j = 0; j < gridSize; j++){
+                if( gameGrid[i][j] == locked){
+                    buttons[ i * gridSize + j].setEnabled( false);
+                    buttons[ i * gridSize + j].setVisible( false);
+                }
+                else if ( gameGrid[i][j] == revealed){
+                    buttons[ i * gridSize + j].setEnabled( false);
+                    buttons[ i * gridSize + j].setVisible( true);
+                }
+                else{
+                    buttons[ i * gridSize + j].setEnabled( true);
+                    buttons[ i * gridSize + j].setVisible( true);
+                }
+            }
+        }
+
+        // manually set corner buttons
+        buttons[0].setVisible( true);
+        buttons[0].setEnabled(true);
+
+        buttons[gridSize - 1].setVisible( true);
+        buttons[gridSize - 1].setEnabled(true);
+
+        buttons[gridSize *( gridSize - 1)].setVisible( true);
+        buttons[gridSize *( gridSize - 1)].setEnabled(true);
+
+        buttons[gridSize * gridSize - 1].setVisible( true);
+        buttons[gridSize * gridSize - 1].setEnabled(true);
     }
 
 
@@ -191,11 +243,11 @@ public class QTreasureModePanel extends QModePanel {
             QAward award = treasureMode.evaluateAwardForCurrentGame( true);
             treasureMode.updateStateOfMode( true);
         } else if( msg.getContents()[Message.VALID] && msg.getContents()[Message.GAME_OVER]){           //////////////////// SHOULD BE CHANGED  ////////////////////
-            QAward award = treasureMode.evaluateAwardForCurrentGame( true);
-            treasureMode.updateStateOfMode( true);
+            QAward award = treasureMode.evaluateAwardForCurrentGame( false);
+            treasureMode.updateStateOfMode( false);
         }
 
-        treasureMode.updatePanel();
+        treasureMode.saveMode();
     }
 
 }
