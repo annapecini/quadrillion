@@ -42,6 +42,7 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
     private int latestLevel;
     private List<String> ownedThemes;
     private String currentTheme;
+    private int highScore;
 
     // First time profile creation
     public QProfile(int ID, String name) {
@@ -55,7 +56,8 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
         ownedThemes = new ArrayList<>();
         ownedThemes.add("Default");
         currentTheme = "Default";
-        playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp, ownedThemes, currentTheme);
+        highScore = 0;
+        playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp, ownedThemes, currentTheme, highScore);
 
         treasureModeGrid = null;
         treasureGrid = null;
@@ -82,7 +84,8 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
             this.valid = true;
             this.ownedThemes = read.ownedThemes;
             this.currentTheme = read.currentTheme;
-            this.playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp, ownedThemes, currentTheme);
+            this.highScore = read.highScore;
+            this.playerInstance = new QPlayer(name, noHints, noHealth, noHealthPowerUp, noCoins, noTimeUp, ownedThemes, currentTheme, highScore);
             this.playerInstance.addObserver(this);
 
             treasureModeGrid = read.treasureModeGrid;
@@ -106,6 +109,7 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
             noPieces = playerInstance.getNoPieces();
             latestLevel = playerInstance.getLatestLevel();
             currentTheme = playerInstance.getCurrentTheme();
+            highScore = playerInstance.getHighScore();
         }
     }
 

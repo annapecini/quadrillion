@@ -69,7 +69,7 @@ public class QGameBuilder {
     }
 
     public class Expression5 {
-        public QGame build(int time) {
+        public QGame build(long time) {
             return new QGame(b, time);
         }
     }

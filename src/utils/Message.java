@@ -4,7 +4,7 @@ public class Message {
     public final static int VALID = 0;
     public final static int GAME_OVER = 1;
     public final static int GAME_WON = 2;
-    public final static int PLAY_BEAT = 3;
+    public final static int GAME_UP = 3;
     public final static int messageLength = 4;
     private boolean[] signals;
 
