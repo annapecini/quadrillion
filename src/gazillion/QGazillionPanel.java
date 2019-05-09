@@ -40,7 +40,6 @@ public class QGazillionPanel extends QPanel implements Observer {
     private QPlayerInfoPanel playerInfo;
     private QUtilityPanel util;
     private JButton giveUp;
-    private JButton win;
     private boolean locked;
     private int musicID;
 
@@ -61,13 +60,6 @@ public class QGazillionPanel extends QPanel implements Observer {
         this.player = player;
         this.theme = theme;
         this.game = game;
-        win = new JButton("DEBUG:WIN");
-        win.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                game.update(new Message("1010"));
-            }
-        });
 
         gamePanel = new QGamePanel(this, frame);
         gamePanel.setPreferredSize(new Dimension(600, 600));
@@ -108,7 +100,6 @@ public class QGazillionPanel extends QPanel implements Observer {
             }
         });
         util = new QUtilityPanel(this,frame,game, player);
-        util.add(win);
 
 	changePiece = new QChangePiecePanel( parent, frame, player, theme, game, this);
 

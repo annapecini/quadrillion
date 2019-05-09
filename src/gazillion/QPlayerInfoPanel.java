@@ -5,6 +5,10 @@ import utils.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * QPlayerInfoPanel
@@ -31,6 +35,14 @@ public class QPlayerInfoPanel extends QPanel implements Observer {
         healthPowerUpLabel = new JLabel(" Health PowerUps: " + player.getNoHealthPowerUp());
         timePowerUpLabel = new JLabel(" Time PowerUps: " + player.getNoTimeUp());
         hintLabel = new JLabel(" Hints: " + player.getNoHints());
+
+//        nameLabel.setFont(font);
+//        coinLabel.setFont(font);
+//        healthLabel.setFont(font);
+//        healthPowerUpLabel.setFont( font);
+//        timePowerUpLabel.setFont( font);
+//        hintLabel.setFont( font);
+
 
         this.setLayout(new FlowLayout());
         this.add(nameLabel);

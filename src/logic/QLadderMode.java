@@ -83,7 +83,7 @@ public class QLadderMode extends QMode implements Observer {
     public void update(Message msg) {
         if(msg.isValid() && msg.getContents()[Message.GAME_OVER] || msg.getContents()[Message.GAME_UP]) {
             timer.stop();
-            timer.setTimeRemaining(0);
+            //timer.setTimeRemaining(0);
             modePanel.disableGameButton();
         }
     }
