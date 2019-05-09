@@ -59,7 +59,11 @@ public class QTreasureModePanel extends QModePanel {
 	    hintButton.setOpaque(false);
 	    hintButton.setContentAreaFilled(false);
 	    hintButton.setBorderPainted(false);
-        topPanel.add(hintButton, BorderLayout.EAST);
+	    JPanel buttonsPanel = new JPanel();
+	    buttonsPanel.setLayout(new FlowLayout());
+        //topPanel.add(hintButton, BorderLayout.EAST);
+	    buttonsPanel.add(hintButton);
+	    topPanel.add(buttonsPanel, BorderLayout.EAST);
 
         // add a back button maybe?
         topPanel.add(getBackButton(), BorderLayout.WEST);
@@ -72,8 +76,13 @@ public class QTreasureModePanel extends QModePanel {
             }
         });
 
-        resetButton = new JButton("Reset");
-        topPanel.add(resetButton, BorderLayout.SOUTH);
+        resetButton = new JButton("");
+        resetButton.setIcon(new ImageIcon(QTreasureModePanel.class.getResource("/img/Reset.png")));
+        resetButton.setOpaque(false);
+        resetButton.setContentAreaFilled(false);
+        resetButton.setBorderPainted(false);
+        buttonsPanel.add(resetButton);
+        //topPanel.add(resetButton, BorderLayout.EAST);
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
