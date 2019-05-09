@@ -20,7 +20,7 @@ public class QProfile implements Serializable, QDiskPersistable, Observer {
 
     transient public static final int INITIAL_HEALTH = 5;
     transient public static final int INITIAL_HINTS = 5;
-    transient public static final int INITIAL_COINS = Integer.MAX_VALUE;
+    transient public static final int INITIAL_COINS = 10;
     transient public static final int INITIAL_TIME_UP = 5;
     transient public static final int INITIAL_HEALTH_POWER_UP = 3;
     transient private static final String FILE_DIRECTORY = "\\src\\files\\profiles\\";
