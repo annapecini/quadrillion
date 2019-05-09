@@ -152,6 +152,9 @@ public class QTreasureMode extends QMode{
                 if( gameGrid[i][j] == unlocked){
                     modePanel.updateAdjacentColor( i * gridSize + j);
                 }
+                else if( gameGrid[i][j] == played) {
+                	modePanel.updatePlayedColor( i * gridSize + j);
+                }
             }
     }
 

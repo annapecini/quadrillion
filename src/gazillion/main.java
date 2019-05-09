@@ -9,7 +9,6 @@ import java.awt.event.WindowEvent;
 
 public class main {
     public static void main(String[] args) {
-        QSoundLoader.getInstance().playClip("victory");
         QFrame frame = new QFrame();
         QProfileMenu prof = new QProfileMenu(null, frame);
         frame.setActivePanel(prof);

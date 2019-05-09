@@ -53,7 +53,12 @@ public class QTreasureModePanel extends QModePanel {
 
 
         // add hint button as last thing of topPanel
-        hintButton = new JButton("Hint");
+        hintButton = new JButton("");
+        ImageIcon icon = new ImageIcon(MainMenu.class.getResource("/img/Hint.png"));
+	    hintButton.setIcon(icon);
+	    hintButton.setOpaque(false);
+	    hintButton.setContentAreaFilled(false);
+	    hintButton.setBorderPainted(false);
         topPanel.add(hintButton, BorderLayout.EAST);
 
         // add a back button maybe?
@@ -97,12 +102,14 @@ public class QTreasureModePanel extends QModePanel {
             buttons[i] = new JButton();
             buttons[i].setActionCommand("" + i);
 
+                        
             JPanel temp = new JPanel();
             temp.setLayout(new FlowLayout());
             temp.setOpaque(false);
             temp.add(buttons[i]);
 
             buttonPanel.add(temp);
+            buttonPanel.setBackground(new Color(152, 216, 216));
 
             buttons[i].addMouseListener(new MouseAdapter() {
                 @Override
@@ -118,7 +125,7 @@ public class QTreasureModePanel extends QModePanel {
         // set button attributes, loaded from Treasure Mode when saved
         initiateButtons();
 
-        buttonPanel.setOpaque(false);
+        //buttonPanel.setOpaque(false);
         add(buttonPanel, BorderLayout.CENTER);
 
         /////////////////////////// TREASURE PANEL //////////////////////////////////////
@@ -149,18 +156,18 @@ public class QTreasureModePanel extends QModePanel {
         frame.setActivePanel(this);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-
-        super.paintComponent(g);
-        try {
-            BufferedImage img = ImageIO.read(getClass().getResource("image2.jpg"));
-            g.drawImage(img,0, 0,null);
-        } catch (IOException exp) {
-            //exp.printStackTrace();
-            //System.out.println( "Printim idiot");
-        }
-    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//
+//        super.paintComponent(g);
+//        try {
+//            BufferedImage img = ImageIO.read(getClass().getResource("image2.jpg"));
+//            g.drawImage(img,0, 0,null);
+//        } catch (IOException exp) {
+//            //exp.printStackTrace();
+//            //System.out.println( "Printim idiot");
+//        }
+//    }
 
     ///////////////////// UPDATE BUTTON COLORS //////////////////////////
 
@@ -170,11 +177,26 @@ public class QTreasureModePanel extends QModePanel {
         buttons[buttonIndex].setVisible( true);
         buttons[buttonIndex].setEnabled( true);
     }
+    
+    public void updatePlayedColor(int buttonIndex) {
+
+        //buttons[buttonIndex].setBackground(Color.GREEN);
+    	// vendos kryqin
+        buttons[buttonIndex].setVisible( true);
+        buttons[buttonIndex].setEnabled( true);
+    }
 
 
     public void updateTreasureColor(int buttonIndex) {
 
         //buttons[buttonIndex].setBackground(Color.RED);
+    	//vendos thesarin
+//    	try{
+//            buttons[buttonIndex].setIcon( new ImageIcon( ImageIO.read(getClass().getResource(  newIcon))));
+//        }
+//        catch( Exception e) {
+//            e.printStackTrace();
+//        }
         buttons[buttonIndex].setVisible( true);
     }
 
@@ -187,35 +209,23 @@ public class QTreasureModePanel extends QModePanel {
     public void initiateButtons(){
         int[][] gameGrid = treasureMode.getGameGrid();
         int gridSize = treasureMode.getGridSize();
-        int[][] treasureGrid = treasureMode.getTreasureGrid();
-
-        // load icons to the buttons according to treasure/ not treasure
-        for( int i = 0; i < gridSize; i++){
-            for( int j = 0; j < gridSize; j++){
-
-                buttons[i * gridSize + j].setContentAreaFilled(false);
-                if( treasureGrid[i][j] == 1){
-                    try{
-                        buttons[i * gridSize + j].setIcon( new ImageIcon( ImageIO.read(getClass().getResource(  "treasure.PNG"))));
-                    }
-                    catch( Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    try{
-                        buttons[i * gridSize + j].setIcon( new ImageIcon( ImageIO.read(getClass().getResource(  "nottreasure.PNG"))));
-                    }
-                    catch( Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
+        
 
         // adjust buttons visibility and enable/disable
         for( int i = 0; i < gridSize; i++){
             for( int j = 0; j < gridSize; j++){
+            	String newIcon = "/img/island" + (int)(Math.random()* 4 + 1) + ".png";
+            	buttons[i * gridSize + j].setContentAreaFilled(false);
+            	//buttons[i  * gridSize + j].setBackground(new Color(152, 216, 216));
+                //Remove border
+                buttons[i * gridSize + j].setBorderPainted(false);
+            	try{
+                    buttons[i * gridSize + j].setIcon( new ImageIcon( ImageIO.read(getClass().getResource(  newIcon))));
+                }
+                catch( Exception e) {
+                    e.printStackTrace();
+                }
+            	
                 if( gameGrid[i][j] == locked){
                     buttons[ i * gridSize + j].setEnabled( false);
                     buttons[ i * gridSize + j].setVisible( false);

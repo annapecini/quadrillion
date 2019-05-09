@@ -32,9 +32,18 @@ public class QThemeDisplay extends JPanel implements Observable {
             themes[i] = manager.getTheme(themeNames.get(i));
         }
         themeIndex = themeNames.indexOf("Default");
-        next = new JButton("Next");
-        prev = new JButton("Prev");
+        next = new JButton("");
+        next.setBackground(new Color(65,68,73));
+        next.setOpaque(true);
+        next.setBorderPainted(false);
+        next.setIcon(new ImageIcon(QThemeDisplay.class.getResource("/img/next.png")));
+        prev = new JButton("");
+        prev.setBackground(new Color(65,68,73));
+        prev.setOpaque(true);
+        prev.setBorderPainted(false);
+        prev.setIcon(new ImageIcon(QThemeDisplay.class.getResource("/img/previous.png")));
         preview = new QThemePreview(currentTheme);
+        preview.setBackground(new Color(65,68,73));
 
         next.addActionListener(new ActionListener() {
             @Override
@@ -58,6 +67,7 @@ public class QThemeDisplay extends JPanel implements Observable {
         });
 
         this.setLayout(new BorderLayout());
+        
         this.add(prev, BorderLayout.WEST);
         this.add(next, BorderLayout.EAST);
         this.add(preview);
