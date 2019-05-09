@@ -33,6 +33,20 @@ public class QPieceCollectionPanel extends QPanel {
         }
     }
 
+    public void refresh( List<QPiece> pieces){
+        removeAll();
+        List<QPieceDisplay> oldDisplays = pieceDisplays;
+        pieceDisplays = new ArrayList<>();
+        for(int i = 0; i < pieces.size(); i++) {
+            QPieceDisplay pieceDisplay = new QPieceDisplay(this, frame, pieces.get(i), theme.getAssets().get(i));
+            pieceDisplay.setAvailable(oldDisplays.get(i).available);
+            pieceDisplays.add(pieceDisplay);
+            add(pieceDisplay);
+        }
+        repaint();
+        revalidate();
+    }
+
     public QPiece getHostedPiece(Component display) {
         return pieceDisplays.get(pieceDisplays.indexOf(display)).getPiece();
     }
@@ -43,7 +57,7 @@ public class QPieceCollectionPanel extends QPanel {
 
     public QPieceDisplay getDisplayOfHostedPiece(QPiece piece) {
         for(QPieceDisplay display: pieceDisplays) {
-            if(piece.getPieceType() == display.getPiece().getPieceType()) {
+            if(piece.getID() == display.getPiece().getID()) {
                 return display;
             }
         }

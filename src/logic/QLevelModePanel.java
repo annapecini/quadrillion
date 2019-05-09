@@ -5,8 +5,13 @@ import utils.Message;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class QLevelModePanel extends QModePanel {
 
@@ -14,7 +19,9 @@ public class QLevelModePanel extends QModePanel {
     private JPanel buttonPanel;
     private QLevelMode levelMode;
     private JPanel topPanel;
+    private JLabel title;
     private JButton lastPlayed;
+    private JPanel[] temps;
 
     public QLevelModePanel(QMode currMode, QPanel parent, QFrame frame) {
 
@@ -33,31 +40,47 @@ public class QLevelModePanel extends QModePanel {
         playerInfo = new QPlayerInfoPanel(this, frame, mode.getPlayer());
         topPanel.add(playerInfo, BorderLayout.NORTH);
 
+        title = new JLabel( "LEVEL MODE");
+        title.setFont( title.getFont().deriveFont( 30.0f));
+        title.setHorizontalAlignment( SwingConstants.CENTER);
+
+        topPanel.add( title, BorderLayout.SOUTH);
+
         // add a back button maybe?
         topPanel.add(getBackButton(), BorderLayout.WEST);
 
         add(topPanel, BorderLayout.NORTH);
 
+        int gridSize = levelMode.getGridSize();
         //////////////////////// THE BUTTONS / LEVELS ///////////////////////////////////////////////////////////////
-        buttonPanel = new JPanel(){};
+        buttonPanel = new JPanel( new GridLayout(gridSize, gridSize, 20, 20)){};
+        buttonPanel.setBackground( new Color(200, 191, 231));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 80, 20, 80));
 
-        int gridSize = levelMode.getGridSize() * levelMode.getGridSize();
+        gridSize = levelMode.getGridSize() * levelMode.getGridSize();
 
         buttons = new JButton[gridSize];
-        buttonPanel.setLayout(new GridLayout(6, 6));
+        temps = new JPanel[gridSize];
 
         for (int i = 0; i < gridSize; i++) {
 
             try{
-                buttons[i] = new JButton( new ImageIcon( ImageIO.read(getClass().getResource(  "1.PNG"))));
+                String levelName = "level" + ((int)(Math.random()* 8) + 1) + ".png";
+                buttons[i] = new JButton( new ImageIcon( ImageIO.read(getClass().getResource(  levelName))));
             }
             catch( Exception e){
                 buttons[i] = new JButton();
             }
 
-            JPanel temp = new JPanel();
-            temp.setLayout(new FlowLayout());
-            temp.setOpaque(false);
+            JPanel temp = new JPanel( new GridBagLayout());
+            temps[i] = temp;
+            temp.setBorder(BorderFactory.createLineBorder(Color.black));
+
+            //remove button borders
+            Border emptyBorder = BorderFactory.createEmptyBorder();
+            buttons[i].setBorder(emptyBorder);
+            buttons[i].setContentAreaFilled(false);
+
             temp.add(buttons[i]);
 
             buttonPanel.add(temp);
@@ -80,7 +103,6 @@ public class QLevelModePanel extends QModePanel {
         }
 
         initiateButtons();
-        buttonPanel.setOpaque(false);
         add(buttonPanel, BorderLayout.CENTER);
 
         frame.setActivePanel(this);
@@ -96,12 +118,15 @@ public class QLevelModePanel extends QModePanel {
         for( int i = 0; i < gridSize*gridSize; i++){
             if( i < highest){
                 buttons[i].setEnabled(true);
+                temps[i].setBackground(new Color(238, 238, 238));
             }
             else{
                 buttons[i].setEnabled(false);
+                temps[i].setBackground(new Color(213, 213, 213));
             }
         }
         buttons[0].setEnabled(true);
+        temps[0].setBackground(new Color(238, 238, 238));
     }
 
     ///////////////////// UPDATE BUTTON COLORS ///////////////////////////////////////////////////////

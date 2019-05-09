@@ -12,6 +12,7 @@ import java.util.List;
 public class QPiece {
     List<QCoordinate> pieceCoordinates;
     QPieceType pieceType;
+    int ID;
 
     /**
      * Constructs a QPiece instance given its coordinates and piece type.
@@ -19,9 +20,10 @@ public class QPiece {
      * @param coords Coordinates which the QPiece instance will occupy.
      * @param type   The type of the piece as present in the original game, one among the 12 types.
      */
-    QPiece(List<QCoordinate> coords, QPieceType type) {
+    QPiece(List<QCoordinate> coords, QPieceType type, int ID) {
         this.pieceCoordinates = coords;
         this.pieceType = type;
+        this.ID = ID;
     }
 
     /**
@@ -90,5 +92,17 @@ public class QPiece {
             avgY += q.y();
         }
         return avgY / pieceCoordinates.size();
+    }
+
+    public void setPiece( QPieceType type){
+        QPieceFactory factory = new QPieceFactory();
+        QPiece tempPiece = factory.getPieceOfType( type, 9);
+
+        this.pieceCoordinates = tempPiece.pieceCoordinates;
+        this.pieceType = type;
+    }
+
+    public int getID() {
+        return ID;
     }
 }

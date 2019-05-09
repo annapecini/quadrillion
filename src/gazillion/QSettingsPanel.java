@@ -15,7 +15,9 @@ public class QSettingsPanel extends QPanel implements Observer {
     private JButton selectTheme;
     public QSettingsPanel(QPanel parent, QFrame frame, QPlayer player, QThemeManager man) {
         super(parent, frame);
-        this.setLayout(new FlowLayout());
+        //this.setLayout(new FlowLayout());
+        this.setLayout(new GridLayout(2,1,0,0));
+        this.setBackground(new Color(65,68,73));
         this.player = player;
         this.manager = man;
         if(player != null) {
@@ -41,9 +43,16 @@ public class QSettingsPanel extends QPanel implements Observer {
 
     public void init() {
         themeDisplay = new QThemeDisplay(manager);
-        this.add(themeDisplay);
+        
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout());
+        topPanel.add(themeDisplay);
+        //this.add(themeDisplay);
         themeDisplay.addObserver(this);
-
+        
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        
         selectTheme = new JButton("Select Theme");
         if(player.getCurrentTheme().equals(manager.getKeyOfTheme(themeDisplay.getCurrentTheme()))) {
             selectTheme.setEnabled(false);
@@ -60,8 +69,14 @@ public class QSettingsPanel extends QPanel implements Observer {
                 selectTheme.setText("Currently Selected");
             }
         });
-        this.add(selectTheme);
-        this.add(getBackButton());
+        
+        bottomPanel.add(selectTheme);
+        bottomPanel.add(getBackButton());
+        this.add(topPanel);
+        this.add(bottomPanel);
+        
+        //this.add(selectTheme);
+        //this.add(getBackButton());
     }
 
     public void setPlayer(QPlayer player) {
