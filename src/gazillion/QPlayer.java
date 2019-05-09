@@ -29,8 +29,9 @@ public class QPlayer implements Observable {
     private int lastDisplayedHint;
     private List<String> ownedThemes;
     private String currentTheme;
+    private int highScore;
 
-    public QPlayer(String name, int noHints, int noHealth, int noHealthPowerUp, int noCoins, int noTimeUp, List<String> ownedThemes, String currentTheme) {
+    public QPlayer(String name, int noHints, int noHealth, int noHealthPowerUp, int noCoins, int noTimeUp, List<String> ownedThemes, String currentTheme, int highScore) {
         observers = new ArrayList<>();
         this.name = name;
         this.noHints = noHints;
@@ -45,6 +46,7 @@ public class QPlayer implements Observable {
         this.lastDisplayedHint = 0;
         this.ownedThemes = ownedThemes;
         this.currentTheme = currentTheme;
+        this.highScore = highScore;
     }
 
     @Override
@@ -61,6 +63,17 @@ public class QPlayer implements Observable {
     }
 
     ///////////////////////////////////////////// GETTERS //////////////////////////////////////////////////
+
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int hs) {
+        this.highScore = hs;
+        notifyObservers();
+    }
+
     public List<String> getOwnedThemes() {
         return ownedThemes;
     }

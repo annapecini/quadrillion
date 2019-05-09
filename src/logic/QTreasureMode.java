@@ -190,7 +190,7 @@ public class QTreasureMode extends QMode{
 
                     //update treasure panel
                     QPieceFactory pieceFactory = new QPieceFactory();
-                    modePanel.updateTreasurePanel (pieceFactory.getPieceOfType( QPieceType.valueOf( "PIECE_TYPE_" + (collectedPieces+1))));
+                    modePanel.updateTreasurePanel (pieceFactory.getPieceOfType( QPieceType.valueOf( "PIECE_TYPE_" + (collectedPieces+1)), collectedPieces));
 
                     // add new piece to the collection
                     collectedPieces++;
@@ -267,7 +267,7 @@ public class QTreasureMode extends QMode{
 
         if( gameGrid[ currentX][ currentY] != 0){
             QGameFactory factory = new QGameFactory();
-            QGame game = factory.getRandomQGame();
+            QGame game = factory.getRandomQGame(300000);
             game.startTimer();
             return game;
         }

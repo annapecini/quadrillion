@@ -81,6 +81,7 @@ public class QTimer implements Observable {
             }
         };
         timer.scheduleAtFixedRate(task, 0, 100);
+        notifyObservers();
     }
 
     /**
@@ -144,8 +145,6 @@ public class QTimer implements Observable {
             Message msg;
             if(timeRemaining <= 0) {
                 msg = new Message("1100");
-            } else if (timeRemaining == 100000 ){
-                msg = new Message("1001");
             } else {
                 msg = new Message("0000");
             }

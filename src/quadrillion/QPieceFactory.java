@@ -18,7 +18,7 @@ public class QPieceFactory {
      * @param type The type of the QPiece to be constructed.
      * @return The QPiece instance with the specified type.
      */
-    public QPiece getPieceOfType(QPieceType type) {
+    public QPiece getPieceOfType(QPieceType type, int ID) {
         switch (type) {
             case PIECE_TYPE_1: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -32,7 +32,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_1);
+                return new QPiece(piece, PIECE_TYPE_1, ID);
             }
             case PIECE_TYPE_2: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -46,7 +46,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_2);
+                return new QPiece(piece, PIECE_TYPE_2, ID);
             }
             case PIECE_TYPE_3: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -60,7 +60,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_3);
+                return new QPiece(piece, PIECE_TYPE_3, ID);
             }
             case PIECE_TYPE_4: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -74,7 +74,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_4);
+                return new QPiece(piece, PIECE_TYPE_4, ID);
             }
             case PIECE_TYPE_5: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -88,7 +88,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_5);
+                return new QPiece(piece, PIECE_TYPE_5, ID);
             }
             case PIECE_TYPE_6: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -102,7 +102,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_6);
+                return new QPiece(piece, PIECE_TYPE_6, ID);
             }
             case PIECE_TYPE_7: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -116,7 +116,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_7);
+                return new QPiece(piece, PIECE_TYPE_7, ID);
             }
             case PIECE_TYPE_8: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -130,7 +130,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_8);
+                return new QPiece(piece, PIECE_TYPE_8, ID);
             }
             case PIECE_TYPE_9: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -144,7 +144,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_9);
+                return new QPiece(piece, PIECE_TYPE_9, ID);
             }
             case PIECE_TYPE_A: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -156,7 +156,7 @@ public class QPieceFactory {
                 piece.add(q2);
                 piece.add(q3);
                 piece.add(q4);
-                return new QPiece(piece, PIECE_TYPE_A);
+                return new QPiece(piece, PIECE_TYPE_A, ID);
             }
             case PIECE_TYPE_B: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -170,7 +170,7 @@ public class QPieceFactory {
                 piece.add(q3);
                 piece.add(q4);
                 piece.add(q5);
-                return new QPiece(piece, PIECE_TYPE_B);
+                return new QPiece(piece, PIECE_TYPE_B, ID);
             }
             case PIECE_TYPE_C: {
                 List<QCoordinate> piece = new ArrayList<>();
@@ -180,7 +180,7 @@ public class QPieceFactory {
                 piece.add(q1);
                 piece.add(q2);
                 piece.add(q3);
-                return new QPiece(piece, PIECE_TYPE_C);
+                return new QPiece(piece, PIECE_TYPE_C, ID);
             }
             default:
                 throw new RuntimeException("Illegal Piece Type");

@@ -259,7 +259,7 @@ public class QTreasureModePanel extends QModePanel {
 /////////////////////////////////////////// GAME OVER //////////////////////////////////////////////////////////
 
     public void displayGameOver() {
-        JOptionPane.showMessageDialog( frame, "YOU DIED");
+        JOptionPane.showMessageDialog( frame, "You died looking for treasure...");
         treasureMode = null;
         frame.setActivePanel( parent);
     }
@@ -270,7 +270,21 @@ public class QTreasureModePanel extends QModePanel {
         if( msg.getContents()[Message.VALID] && msg.getContents()[Message.GAME_WON]){
             QAward award = treasureMode.evaluateAwardForCurrentGame( true);
             treasureMode.updateStateOfMode( true);
-        } else if( msg.getContents()[Message.VALID] && msg.getContents()[Message.GAME_OVER]) {
+            if(award.getPieceAward() == null)
+                JOptionPane.showMessageDialog(frame, "You loot the island. Your spoils are: " +
+                                           award.getCoinsAwardNo() + " coins.\n" +
+                                           award.getTimeAwardNo() + " time powerup(s)\n" +
+                                           award.getHealthAwardNo() + " health powerup(s)\n" +
+                                           award.getHintsAwardNo() + " hint powerup(s).");
+            else {
+                JOptionPane.showMessageDialog(frame, "You loot the island. Your spoils are: " +
+                        award.getCoinsAwardNo() + " coins.\n" +
+                        award.getTimeAwardNo() + " time powerup(s)\n" +
+                        award.getHealthAwardNo() + " health powerup(s)\n" +
+                        award.getHintsAwardNo() + " hint powerup(s)\n" +
+                        "You also found a piece!");
+            }
+        } else if( msg.getContents()[Message.VALID] && (msg.getContents()[Message.GAME_OVER] || msg.getContents()[Message.GAME_UP])) {
             QAward award = treasureMode.evaluateAwardForCurrentGame( false);
             treasureMode.updateStateOfMode( false);
         }

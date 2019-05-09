@@ -27,6 +27,10 @@ import static utils.Message.*;
  * @version 20190328
  */
 public class QGazillionPanel extends QPanel implements Observer {
+
+    private QPanel changePiece;
+    private JButton changePieceButton;
+
     private QTheme theme;
     private QGame game;
     private QPlayer player;
@@ -36,6 +40,7 @@ public class QGazillionPanel extends QPanel implements Observer {
     private QPlayerInfoPanel playerInfo;
     private QUtilityPanel util;
     private JButton giveUp;
+    private JButton win;
     private boolean locked;
     private int musicID;
 
@@ -56,6 +61,13 @@ public class QGazillionPanel extends QPanel implements Observer {
         this.player = player;
         this.theme = theme;
         this.game = game;
+        win = new JButton("DEBUG:WIN");
+        win.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.update(new Message("1010"));
+            }
+        });
 
         gamePanel = new QGamePanel(this, frame);
         gamePanel.setPreferredSize(new Dimension(600, 600));
@@ -96,6 +108,28 @@ public class QGazillionPanel extends QPanel implements Observer {
             }
         });
         util = new QUtilityPanel(this,frame,game, player);
+        util.add(win);
+
+	changePiece = new QChangePiecePanel( parent, frame, player, theme, game, this);
+
+        changePieceButton = new JButton( "Change selected piece");
+
+        changePieceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+                if( selectedPiece != null) {
+                    JButton button = (JButton) actionEvent.getSource();
+                    if (button.isEnabled()) {
+                        frame.setActivePanel(changePiece);
+                        button.setEnabled(false);
+                    }
+                }
+            }
+        });
+
+        util.add( this.changePieceButton);
+
         util.add(this.giveUp);
 
         add( util, BorderLayout.SOUTH);
@@ -194,21 +228,22 @@ public class QGazillionPanel extends QPanel implements Observer {
 
     public void update(Message msg) {
         if(msg.isValid()) {
-            if (msg.getContents()[GAME_OVER] && !msg.getContents()[GAME_WON]) {
+            if (msg.getContents()[GAME_OVER]) {
                 QSoundLoader.getInstance().playClip("shot");
                 QSoundLoader.getInstance().playClip("die");
                 game.stopTimer();
                 locked = true;
-                JOptionPane.showMessageDialog(frame, "You died.");
+                JOptionPane.showMessageDialog(frame, "You lost.");
                 frame.setActivePanel( parent);
-            } else if (msg.getContents()[PLAY_BEAT]) {
-                QSoundLoader.getInstance().playClip("beat");
+            } else if (msg.getContents()[GAME_UP]) {
             } else if (msg.getContents()[GAME_WON]){
                 game.stopTimer();
                 QSoundLoader.getInstance().playClip("victory");
                 revalidate();
                 repaint();
                 locked = true;
+                JOptionPane.showMessageDialog(frame, "You won!");
+                frame.setActivePanel( parent);
             }
         }
         util.update(msg);
@@ -249,7 +284,7 @@ public class QGazillionPanel extends QPanel implements Observer {
                 Shape circle = new Ellipse2D.Double(centerX - radius, centerY - radius, 2.0 * radius, 2.0 * radius);
                 g2d.draw(circle);
                 try {
-                    BufferedImage asset = theme.getAssetOf(((QPiece) (entry.getValue())).getPieceType());
+                    BufferedImage asset = theme.getAssets().get(((QPiece) (entry.getValue())).getID());
                     g2d.drawImage(asset, (int)centerX - theme.getSize()/2, (int)centerY - theme.getSize()/2, null);
                 } catch(NullPointerException e) {
 
@@ -270,7 +305,7 @@ public class QGazillionPanel extends QPanel implements Observer {
 
         public void drawSelectedPieceAt(Graphics g, int x, int y) {
             if(selectedPiece != null) {
-                BufferedImage asset = theme.getAssetOf(selectedPiece.getPieceType());
+                BufferedImage asset = theme.getAssets().get(selectedPiece.getID());
                 int offsetX = x - theme.getSize() / 2;
                 int offsetY = y - theme.getSize() / 2;
                 Graphics2D g2d = (Graphics2D) g;
@@ -286,5 +321,14 @@ public class QGazillionPanel extends QPanel implements Observer {
                 repaint();
             }
         }
+    }
+
+ public QPieceCollectionPanel getQPieceCollectionPanel(){
+        return piecePanel;
+    }
+
+    public QPiece getSelectedPiece( ){
+
+        return selectedPiece;
     }
 }
